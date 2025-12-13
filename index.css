@@ -248,6 +248,8 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     border-radius: 99em;
     font-size: 13px;
     background-color: transparent;
+    touch-action: none;
+    /* Critical for efficient touch dragging */
     /* backdrop-filter: blur(12px) url(#switcher) saturate(var(--saturation)); */
     /* -webkit-backdrop-filter: blur(12px) saturate(var(--saturation)); */
     box-shadow:
@@ -310,13 +312,31 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     /* Hidden on desktop */
 }
 
-/* ... existing code ... */
-
 .switcher__text {
     font-weight: 400;
     white-space: nowrap;
     color: var(--c);
     transition: color 200ms, font-weight 200ms, opacity 200ms;
+}
+
+/* Responsive Switcher: Show icons, hide text on small screens */
+@media (max-width: 600px) {
+    .switcher__text {
+        display: none;
+    }
+
+    .switcher__icon-svg {
+        display: block;
+    }
+
+    .switcher {
+        height: 44px;
+        /* Slightly smaller on mobile */
+    }
+
+    .switcher__option {
+        padding: 0;
+    }
 }
 
 .switcher__logo {

@@ -145,8 +145,22 @@ function getCheckedIndex() {
 function updateLayout() {
     const optWidth = switcher.offsetWidth / options.length;
     maxTranslate = switcher.offsetWidth - optWidth;
+
+    // Snap bubble to current selection on resize
+    const checkedIndex = getCheckedIndex();
+    if (checkedIndex !== -1 && !isDragging) {
+        const finalTranslate = checkedIndex * optWidth;
+        bubble.style.transform = `translateX(${finalTranslate}px)`;
+    }
+
     return optWidth;
 }
+
+// Handle resize to keep bubble aligned
+window.addEventListener('resize', () => {
+    // Debounce slightly or just run
+    requestAnimationFrame(updateLayout);
+});
 
 function updateVisuals() {
     if (!isDragging) return;
@@ -189,6 +203,9 @@ function startDrag(e) {
 
 function moveDrag(e) {
     if (!isDragging) return;
+
+    // Prevent default to ensure smooth drag without scrolling or other browser interventions
+    if (e.cancelable) e.preventDefault();
 
     const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     const deltaX = clientX - startX;
