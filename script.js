@@ -125,6 +125,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
+const sections = document.querySelectorAll('section');
 sections.forEach(section => observer.observe(section));
 
 // Drag navigation bubble to switch sections
@@ -158,62 +159,65 @@ function updateLayout() {
 
 // Handle resize to keep bubble aligned
 window.addEventListener('resize', () => {
-    // Debounce slightly or just run
     requestAnimationFrame(updateLayout);
 });
 
 function updateVisuals() {
     if (!isDragging) return;
-    bubble.style.transform = `translateX(${currentTranslate}px)`;
+    // Add slight squeeze effect while dragging
+    bubble.style.transform = `translateX(${currentTranslate}px) scale(0.95)`;
     animationFrameId = requestAnimationFrame(updateVisuals);
 }
 
 function startDrag(e) {
-    // Only drag if left click (for mouse)
+    if (!e.target.closest('.switcher')) return;
     if (e.type === 'mousedown' && e.button !== 0) return;
 
-    // Check if we are interacting with the switcher area generally
-    // (We allow dragging from anywhere in the switcher for easier touch targets)
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+
+    // Bounds Check
+    const rect = switcher.getBoundingClientRect();
+    const relativeX = clientX - rect.left;
+    const optWidth = switcher.offsetWidth / options.length;
+    const currentIndex = getCheckedIndex();
+    const bubbleX = currentIndex * optWidth;
+
+    // Buffer for easier grabbing
+    if (relativeX < bubbleX - 10 || relativeX > bubbleX + optWidth + 10) {
+        return;
+    }
 
     isDragging = true;
-    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     startX = clientX;
 
-    // Prevent default to stop text selection/native dragging
-    if (e.cancelable && e.type === 'mousedown') e.preventDefault();
+    if (e.cancelable) e.preventDefault();
 
-    // Calculate initial state
-    const optWidth = updateLayout();
-    initialTranslate = getCheckedIndex() * optWidth;
+    updateLayout();
+    initialTranslate = currentIndex * optWidth;
     currentTranslate = initialTranslate;
 
-    // Immediate feedback
+    switcher.classList.add('switcher--dragging');
     bubble.style.transition = 'none';
     switcher.style.cursor = 'grabbing';
 
     cancelAnimationFrame(animationFrameId);
     animationFrameId = requestAnimationFrame(updateVisuals);
 
-    // optimize: attach move/end listeners only when dragging
     document.addEventListener('mousemove', moveDrag);
     document.addEventListener('touchmove', moveDrag, { passive: false });
     document.addEventListener('mouseup', endDrag);
     document.addEventListener('touchend', endDrag);
+    document.addEventListener('touchcancel', endDrag);
 }
 
 function moveDrag(e) {
     if (!isDragging) return;
-
-    // Prevent default to ensure smooth drag without scrolling or other browser interventions
     if (e.cancelable) e.preventDefault();
 
     const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     const deltaX = clientX - startX;
 
     let newPos = initialTranslate + deltaX;
-
-    // Simple clamping without resistance (1:1 movement)
-    // "Simple drag" - just stops at edges, no rubber band force
     newPos = Math.max(0, Math.min(newPos, maxTranslate));
 
     currentTranslate = newPos;
@@ -221,45 +225,36 @@ function moveDrag(e) {
 
 function endDrag() {
     if (!isDragging) return;
+
     isDragging = false;
     cancelAnimationFrame(animationFrameId);
     switcher.style.cursor = '';
+    switcher.classList.remove('switcher--dragging');
 
-    // Re-enable transition for smooth snap
-    // Using a springier bezier for the snap
-    bubble.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    bubble.style.transition = '';
 
-    // Find nearest option
     const optWidth = switcher.offsetWidth / options.length;
     const nearestIndex = Math.round(currentTranslate / optWidth);
     const clampedIndex = Math.max(0, Math.min(nearestIndex, options.length - 1));
-
-    // Snap visually first
     const finalTranslate = clampedIndex * optWidth;
-    bubble.style.transform = `translateX(${finalTranslate}px)`;
 
-    // Update input state
+    bubble.style.transform = `translateX(${finalTranslate}px)`;
+    bubble.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
     const input = options[clampedIndex].querySelector('input');
     if (!input.checked) {
         input.checked = true;
         input.dispatchEvent(new Event('change'));
     }
 
-    // Clean up style after transition to let CSS take over if needed
-    // But we need to keep inline transform until checking next time or rely on CSS classes
-    // Here we clear it after a timeout matching transition duration to let CSS state take over
-    setTimeout(() => {
-        bubble.style.transition = '';
-        bubble.style.transform = '';
-    }, 600);
+    setTimeout(() => { bubble.style.transition = ''; }, 400);
 
-    // optimize: remove listeners
     document.removeEventListener('mousemove', moveDrag);
     document.removeEventListener('touchmove', moveDrag);
     document.removeEventListener('mouseup', endDrag);
     document.removeEventListener('touchend', endDrag);
+    document.removeEventListener('touchcancel', endDrag);
 }
 
-// Event Listeners
 switcher.addEventListener('mousedown', startDrag);
-switcher.addEventListener('touchstart', startDrag, { passive: false }); // passive: false to allow preventing scroll if needed
+switcher.addEventListener('touchstart', startDrag, { passive: false });

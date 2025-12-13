@@ -419,10 +419,21 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
         background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
         box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
         transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Springy bounce */
+    /* Springy bounce - refined to be tighter/more Apple-like */
+    transition:
+        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+        transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        scale 200ms ease;
+    /* Add separate transition for scale */
     pointer-events: none;
     will-change: transform;
-    /* Let clicks pass through to inputs underneath if needed, but we'll likely handle drag on parent */
+}
+
+.switcher--dragging .switcher__bubble {
+    scale: 0.95;
+    transition: scale 200ms ease;
+    /* When dragging, we might want to disable the transform transition, which JS does via style assigned to element */
 }
 
 /* Initially position based on Checked state using CSS for load/fallback  */
@@ -1383,9 +1394,4 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     100% {
         transform: scale(1, 1);
     }
-}
-
-.icon-jelly,
-.theme-toggle:hover {
-    animation: jelly 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
