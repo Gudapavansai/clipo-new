@@ -714,6 +714,36 @@ img {
     transform: scale(1.05);
 }
 
+.hero__play-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: color-mix(in srgb, var(--c-light) 70%, transparent);
+    color: var(--c-content);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(12px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 40%), transparent),
+        inset 2px 3px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
+        inset -2px -2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        0px 4px 12px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
+    transition: transform 200ms, background-color 200ms, box-shadow 200ms;
+    z-index: 10;
+}
+
+.hero__play-btn:hover {
+    transform: scale(1.08);
+    background-color: color-mix(in srgb, var(--c-light) 85%, transparent);
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     body {
