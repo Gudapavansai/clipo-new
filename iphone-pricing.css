@@ -1,0 +1,83 @@
+/* iPhone Pricing Styles */
+.pricing-header-iphone {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+    z-index: 2;
+}
+
+.pricing-header-iphone h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--c-content);
+    letter-spacing: -0.02em;
+}
+
+/* Increase specificity to override index.css .pricing-card */
+.pricing-card.iphone-card {
+    align-items: flex-start;
+    text-align: left;
+    padding: 40px;
+    overflow: hidden;
+    position: relative;
+    /* Inherits .glass-card styles */
+}
+
+@media (max-width: 768px) {
+    .pricing-card.iphone-card {
+        padding: 24px;
+    }
+}
+
+.pricing-card.iphone-card .price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--c-content);
+    margin: 0 0 20px 0;
+    /* Left align margin */
+}
+
+.pricing-card.iphone-card .pricing-divider {
+    width: 60px;
+    height: 4px;
+    background: var(--c-action);
+    border-radius: 2px;
+    margin: 0 0 30px 0;
+    /* Left align margin */
+}
+
+.pricing-card.iphone-card .features {
+    text-align: left;
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--c-content);
+    opacity: 0.8;
+    width: 100%;
+}
+
+.pricing-card.iphone-card .features li {
+    border-bottom: none;
+    padding: 8px 0;
+    display: flex;
+    /* Ensure flex for icon alignment */
+    align-items: center;
+    /* Vertically center icon */
+    justify-content: flex-start;
+}
+
+.pricing-card.iphone-card .features li::before {
+    content: '✓';
+    /* Ensure content is here if not in HTML */
+    color: var(--c-action);
+    margin-right: 8px;
+    font-weight: 800;
+}
+
+.feature-note {
+    font-size: 0.8em;
+    opacity: 0.7;
+    margin-left: 4px;
+    font-weight: 400;
+}
+
+/* Adjust grid for better spacing if needed */

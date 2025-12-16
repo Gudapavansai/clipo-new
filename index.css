@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('background.css');
+@import url('footer.css');
+@import url('scroll.css');
+@import url('animations.css');
+@import url('iphone-pricing.css');
 
 
 body {
@@ -6,8 +11,8 @@ body {
     --c-light: #fff;
     --c-dark: #000;
 
-    --c-content: #224;
-    --c-action: #0052f5;
+    --c-content: #000;
+    --c-action: #c850c0;
 
     --c-bg: #E8E8E9;
 
@@ -17,9 +22,9 @@ body {
     --saturation: 150%;
 
     font-size: 20px;
-    font-family: "DM Sans", sans-serif;
+    font-family: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
     font-optical-sizing: auto;
-    background: var(--c-bg);
+    background-color: var(--c-bg);
     color: var(--c-content);
 
     transition: background 400ms cubic-bezier(1, 0.0, 0.4, 1), color 400ms cubic-bezier(1, 0.0, 0.4, 1);
@@ -31,7 +36,7 @@ body:has(input[value="dark"]:checked) {
     --c-dark: #000;
 
     --c-content: #e1e1e1;
-    --c-action: #03d5ff;
+    --c-action: #00e5ff;
 
     --c-bg: #1b1b1d;
 
@@ -139,7 +144,7 @@ body:has(input[value="dim"]:checked) .navbar__logo--dark {
 }
 
 .navbar__btn:hover {
-    transform: translateY(-2px);
+    transform: scale(1.05);
     background-color: color-mix(in srgb, var(--c-glass) 25%, transparent);
 }
 
@@ -172,7 +177,7 @@ body:has(input[value="dim"]:checked) .navbar__logo--dark {
 }
 
 .navbar__icon:hover {
-    transform: translateY(-2px);
+    transform: scale(1.05);
     background-color: color-mix(in srgb, var(--c-glass) 25%, transparent);
 }
 
@@ -180,6 +185,15 @@ body:has(input[value="dim"]:checked) .navbar__logo--dark {
 .theme-toggle {
     position: relative;
     overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.15);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
 }
 
 .theme-toggle::before {
@@ -245,6 +259,8 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     padding: 4px;
     margin: 0 auto;
     border: none;
+    overflow: hidden;
+    /* Prevent bubble from overflowing */
     border-radius: 99em;
     font-size: 13px;
     background-color: transparent;
@@ -330,7 +346,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     }
 
     .switcher {
-        height: 44px;
+        height: 50px;
         /* Slightly smaller on mobile */
     }
 
@@ -371,7 +387,6 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 }
 
 .switcher__option:hover {
-    --c: var(--c-action);
     cursor: pointer;
     opacity: 0.8;
 }
@@ -458,123 +473,16 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     transform: translateX(calc(var(--w) * 4));
 }
 
-/* Animations for dragging effect */
-@keyframes scaleToggle {
-    0% {
-        scale: 1 1;
-    }
-
-    40% {
-        scale: 1.25 1;
-    }
-
-    80% {
-        scale: 0.95 1;
-    }
-
-    100% {
-        scale: 1 1;
-    }
-}
-
-@keyframes scaleToggle2 {
-    0% {
-        scale: 1 1;
-    }
-
-    40% {
-        scale: 1.35 1;
-    }
-
-    80% {
-        scale: 0.9 1;
-    }
-
-    100% {
-        scale: 1 1;
-    }
-}
-
-@keyframes scaleToggle3 {
-    0% {
-        scale: 1 1;
-    }
-
-    40% {
-        scale: 1.25 1;
-    }
-
-    80% {
-        scale: 0.95 1;
-    }
-
-    100% {
-        scale: 1 1;
-    }
-}
 
 
 
 
 
-/* //////////////////////////////////////////
-/  Article Styles //////////////////////// */
 
-.article {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5em 2em;
-}
 
-h1,
-h2,
-p,
-blockquote {
-    width: 100%;
-    max-width: 600px;
-    box-sizing: border-box;
-}
-
-h1 {
-    font-size: 3em;
-    margin: 1.4em 0 0.6em;
-}
-
-h2 {
-    font-size: 2em;
-    margin: 1.4em 0 0.6em;
-}
-
-p {
-    line-height: 160%;
-    margin: 0 0 1em;
-}
-
-blockquote {
-    margin-left: 0;
-    margin-right: 0;
-    font-size: 2em;
-    padding-left: 1em;
-    border-left: 0.1em solid currentColor;
-}
-
-figure {
-    margin: 1em 0 2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-figcaption {
-    max-width: 600px;
-    margin-top: 1em;
-    font-size: 0.8em;
-    color: color-mix(in srgb, var(--c-content) 60%, var(--c-bg));
-}
 
 a {
-    color: var(--c-action);
+    color: var(--c-content);
     text-decoration-thickness: 0.05em;
     text-underline-position: under;
     text-decoration-color: color-mix(in srgb, currentColor, transparent 70%);
@@ -613,11 +521,13 @@ img {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 100px 60px 60px;
+    padding: 100px 60px;
     box-sizing: border-box;
     gap: 80px;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    /* For scroll indicator */
 }
 
 .hero__content {
@@ -637,6 +547,7 @@ img {
     background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
     border-radius: 99em;
     margin-bottom: 24px;
+    /* animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s backwards; */
 }
 
 .hero__badge-dot {
@@ -665,14 +576,21 @@ img {
     line-height: 1.1;
     margin: 0 0 24px;
     color: var(--c-content);
+    /* animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards; */
+}
+
+.hero__title:hover .hero__title-gradient {
+    filter: hue-rotate(15deg);
 }
 
 .hero__title-gradient {
     background: linear-gradient(135deg, #ff6b9d, #c850c0, #7c3aed);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: filter 0.4s ease;
 }
+
 
 .hero__description {
     font-size: 16px;
@@ -680,12 +598,14 @@ img {
     color: color-mix(in srgb, var(--c-content) 70%, transparent);
     margin: 0 0 32px;
     max-width: 450px;
+    /* animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s backwards; */
 }
 
 .hero__buttons {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    /* animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s backwards; */
 }
 
 .hero__btn {
@@ -716,7 +636,7 @@ img {
 }
 
 .hero__btn:hover {
-    transform: translateY(-2px);
+    transform: scale(1.05);
     background-color: color-mix(in srgb, var(--c-glass) 25%, transparent);
 }
 
@@ -734,6 +654,8 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    perspective: 1000px;
+    /* animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s backwards; */
 }
 
 .hero__device {
@@ -753,7 +675,19 @@ img {
         0px 20px 60px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
     transition:
         background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
+        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+        transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+}
+
+.hero__device:hover {
+    transform: translateY(-12px) rotateY(-5deg) rotateX(2deg);
+    box-shadow:
+        inset 0 0 0 1.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
+        inset 2px 4px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
+        inset -2px -2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        0px 20px 40px -10px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent),
+        0px 40px 80px -10px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
 }
 
 .hero__device-screen {
@@ -772,6 +706,11 @@ img {
     border-radius: 0;
     max-width: none;
     aspect-ratio: unset;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero__device:hover .hero__device-image {
+    transform: scale(1.05);
 }
 
 .hero__play-btn {
@@ -805,9 +744,14 @@ img {
 
 /* Responsive */
 @media (max-width: 900px) {
+    body {
+        font-size: 16px;
+    }
+
     .hero {
         flex-direction: column;
-        padding: 140px 40px 60px;
+        /* Less top padding (no header), more bottom padding (header moved to bottom) */
+        padding: 60px 20px;
         text-align: center;
     }
 
@@ -827,41 +771,59 @@ img {
         max-width: 300px;
     }
 
-    /* iPhone-style Bottom Navigation */
+    /* iPhone-style Top Navigation (Like Reference Image) */
     .navbar__btn {
-        display: none;
+        display: block;
+        /* Make sure it's visible */
+        padding: 8px 16px;
+        font-size: 12px;
+        margin-right: -8px;
+        /* Slight adjustment for tight spacing */
     }
 
-    /* Move logo to bottom left */
+    /* Move logo to top left */
     .navbar {
-        top: auto;
-        bottom: 20px;
-        left: 20px;
-        padding: 0;
+        top: 0;
+        bottom: auto;
+        left: 0;
+        padding: 16px 24px;
+        width: 100%;
+        pointer-events: none;
+        /* Let clicks pass through empty space */
+        justify-content: space-between;
     }
 
     .navbar__logo {
-        height: 48px;
-        /* Match touch target size */
+        height: 28px;
+        /* Smaller for mobile header */
         width: auto;
-        padding: 8px 16px;
-        /* Add padding inside for smaller visual */
-        box-sizing: border-box;
-        background-color: color-mix(in srgb, var(--c-glass) 60%, transparent);
-        backdrop-filter: blur(12px);
-        border-radius: 99em;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        padding: 0;
+        box-sizing: content-box;
+        background-color: transparent;
+        backdrop-filter: none;
+        border-radius: 0;
+        box-shadow: none;
+        pointer-events: auto;
     }
 
     .navbar__actions {
-        top: auto;
-        bottom: 20px;
-        right: 20px;
-        padding: 0;
+        top: 0;
+        bottom: auto;
+        right: 0;
+        padding: 16px 24px;
+        pointer-events: auto;
     }
 
     .switcher {
-        --w: 64px;
+        /* Dynamic width for small screens to prevent overflow */
+        /* (100vw - 40px padding) / 5 items */
+        /* Wider switcher for mobile */
+        --w: calc((100vw - 24px) / 5);
+        /* Reduced margin deduction from 48px to 24px */
+        max-width: none;
+        /* Allow it to grow beyond 400px if needed, or set a larger cap */
+        width: calc(100vw - 16px);
+        /* Explicit widely width */
         /* Narrower items for mobile */
         top: auto;
         bottom: 20px;
@@ -880,6 +842,7 @@ img {
     padding: 100px 60px;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -903,19 +866,20 @@ img {
 .text-gradient {
     background: linear-gradient(135deg, #ff6b9d, #c850c0, #7c3aed);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: filter 0.4s ease;
 }
 
 .section__desc,
 .section__subtitle {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: color-mix(in srgb, var(--c-content) 70%, transparent);
+    color: color-mix(in srgb, var(--c-content) 90%, transparent);
     margin: 0 auto;
 }
 
-/* Reusable Glass Card */
+/* Reusable Glass Card - Restored to Liquid Glass (Navbar) Theme */
 .glass-card {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border-radius: 32px;
@@ -928,14 +892,37 @@ img {
         inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
         inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
         inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
         0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
         0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
     transition: transform 0.4s cubic-bezier(1, 0, 0.4, 1), box-shadow 0.4s cubic-bezier(1, 0, 0.4, 1);
+    will-change: transform;
+    border: none;
 }
 
 .glass-card:hover {
     transform: translateY(-5px);
     background-color: color-mix(in srgb, var(--c-glass) 18%, transparent);
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+}
+
+@media (max-width: 768px) {
+    .glass-card {
+        padding: 24px;
+        border-radius: 24px;
+    }
 }
 
 /* ==========================================
@@ -946,8 +933,62 @@ img {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 800px;
+    /* Other visual properties now handled by shared rule with .contact__card */
+}
+
+.about__visions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
     width: 100%;
+    margin-top: 40px;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .about__visions {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Vision cards now removed styling to just content */
+.vision-card {
+    /* Ensure content flow */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    /* Removed card styling */
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+}
+
+.vision-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--c-action) 10%, transparent);
+    color: var(--c-action);
+    margin-bottom: 16px;
+}
+
+.vision-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--c-content);
+}
+
+.vision-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--c-content) 70%, transparent);
 }
 
 .about__stats {
@@ -970,10 +1011,7 @@ img {
 .stat__number {
     font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--c-content);
 }
 
 .stat__label {
@@ -989,26 +1027,50 @@ img {
    Services Section
    ========================================== */
 .services__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
     width: 100%;
 }
 
-@media (max-width: 700px) {
-    .services__grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .service-card {
+    /* 3 columns minus gap */
+    width: calc((100% - 60px) / 3);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 40px;
-    height: 100%;
-    /* Ensure equal height */
+    text-align: left;
+    padding: 32px;
+    min-height: 320px;
+    /* height: auto; -> let flex stretch handle it, but allow content to push */
+    box-sizing: border-box;
+    /* Ensure cards are strictly 3 cols */
+    flex-grow: 0;
+    flex-shrink: 0;
 }
+
+@media (max-width: 992px) {
+    .service-card {
+        /* 2 columns minus gap */
+        width: calc((100% - 30px) / 2);
+    }
+}
+
+@media (max-width: 768px) {
+    .services__grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-card {
+        width: 100%;
+        max-width: 450px;
+        /* Prevent too wide on mobile */
+    }
+}
+
+
 
 .service-icon {
     width: 56px;
@@ -1036,11 +1098,12 @@ img {
    Pricing Section
    ========================================== */
 .pricing__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
     width: 100%;
     align-items: stretch;
+    flex-wrap: wrap;
 }
 
 .pricing-card {
@@ -1049,7 +1112,28 @@ img {
     align-items: center;
     text-align: center;
     position: relative;
-    min-height: 450px;
+    /* 3 columns minus gap logic to match services */
+    width: calc((100% - 60px) / 3);
+    /* prevent flex-basis from overriding width if content is small */
+    flex: 0 0 calc((100% - 60px) / 3);
+
+    min-height: auto;
+    box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+    .pricing-card {
+        width: calc((100% - 30px) / 2);
+        flex: 0 0 calc((100% - 30px) / 2);
+    }
+}
+
+@media (max-width: 768px) {
+    .pricing-card {
+        --cols: 1;
+        width: 100%;
+        flex: auto;
+    }
 }
 
 .pricing-card.featured {
@@ -1136,46 +1220,153 @@ img {
     opacity: 0.9;
 }
 
+.contact__card,
+.about__card {
+    /* Use standard glass card theme */
+    width: 100%;
+    max-width: 1000px;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
 .contact__card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    width: 100%;
-    max-width: 900px;
-    padding: 60px;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
 }
+
+
+
+/* Light mode override for specific 'white' look if needed */
+/* Light mode override for specific 'white' look if needed */
+/* Light mode override removed to keep consistent liquid glass theme */
+
+/* Clear overlay */
+/* Clear overlay removed */
 
 .contact__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    /* Left align text */
+    text-align: left;
+    position: relative;
+    z-index: 1;
+}
+
+.contact__content .section__title {
+    color: var(--c-content);
+    /* Dark navy/black text */
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.contact__content .section__title .text-gradient {
+    background: linear-gradient(135deg, #ff6b9d, #c850c0, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.contact__content .section__desc {
+    color: var(--c-content);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+body:has(input[value="dark"]:checked) .contact__content .section__title,
+body:has(input[value="dark"]:checked) .contact__content .section__desc,
+body:has(input[value="dim"]:checked) .contact__content .section__title,
+body:has(input[value="dim"]:checked) .contact__content .section__desc {
+    color: var(--c-content);
 }
 
 .contact__form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .glass-input {
     width: 100%;
-    padding: 16px 20px;
+    padding: 18px 24px;
     border: none;
-    border-radius: 12px;
-    background-color: color-mix(in srgb, var(--c-glass) 10%, transparent);
-    color: var(--c-content);
+    border-radius: 16px;
     font-family: inherit;
     font-size: 1rem;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
     box-sizing: border-box;
+    color: var(--c-content);
+
+    /* Navbar-like Liquid Glass Theme for Inputs */
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    backdrop-filter: blur(8px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset 0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        inset 0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+}
+
+body:has(input[value="light"]:checked) .glass-input {
+    background-color: rgba(0, 0, 0, 0.05);
+    /* Light grey on white */
+}
+
+/* Remove old pill/glass styles */
+.glass-input::placeholder {
+    color: #888;
+    font-weight: 500;
 }
 
 .glass-input:focus {
     outline: none;
-    background-color: color-mix(in srgb, var(--c-glass) 20%, transparent);
-    box-shadow: inset 0 0 0 2px var(--c-action);
+    background-color: color-mix(in srgb, var(--c-light) 80%, transparent);
+    border-color: color-mix(in srgb, var(--c-action) 30%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-action) 10%, transparent);
+    transform: none;
+}
+
+/* Textarea specific styling */
+textarea.glass-input {
+    border-radius: 12px;
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Specific override for contact form button to match the glass input style */
+.contact__card .hero__btn--primary {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #333;
+    /* Darker text for readability or white if bold enough. Reference implies text matches. Let's try dark for contrast or white? Image shows dark button text actually? No, it looks like a glass button. Let's stick to white or very dark purple. */
+    color: #1a1a1a;
+    font-weight: 600;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.contact__card .hero__btn--primary:hover {
+    background: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Helpers */
@@ -1192,6 +1383,18 @@ img {
 
 .primary-glow {
     box-shadow: 0 0 20px color-mix(in srgb, var(--c-action) 30%, transparent);
+}
+
+.navbar__btn.primary-glow {
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
+        0 0 20px color-mix(in srgb, var(--c-action) 30%, transparent);
 }
 
 /* Responsive adjustments */
@@ -1213,23 +1416,30 @@ img {
         transform: translateY(-5px);
     }
 
-    .pricing__grid,
-    .services__grid {
-        grid-template-columns: 1fr;
-    }
-
     .about__stats {
         flex-direction: row;
         gap: 20px;
     }
 }
 
+@media (max-width: 600px) {
+    .section {
+        padding: 40px 16px;
+        gap: 40px;
+    }
+
+    .about__stats {
+        flex-wrap: wrap;
+    }
+}
+
+
 /* ==========================================
    Footer Styles
    ========================================== */
 .footer {
     padding: 80px 60px 40px;
-    margin-top: 80px;
+    margin-top: 100px;
     border-top: 1px solid color-mix(in srgb, var(--c-content) 5%, transparent);
     background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--c-glass) 10%, transparent));
 }
@@ -1317,21 +1527,131 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
 .social-link {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    /* Glass Effect */
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    color: var(--c-content);
+
+    backdrop-filter: blur(8px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        0px 4px 12px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
+
+    transition: transform 200ms, background-color 200ms, color 200ms;
+}
+
+.social-link:hover {
+    transform: scale(1.1);
+    background-color: color-mix(in srgb, var(--c-glass) 25%, transparent);
+    color: var(--c-action);
 }
 
 .social-link svg {
     flex-shrink: 0;
+    width: 20px;
+    height: 20px;
 }
 
 .footer__bottom {
     max-width: 1200px;
     margin: 60px auto 0;
-    padding-top: 30px;
+    padding-top: 40px;
     border-top: 1px solid color-mix(in srgb, var(--c-content) 5%, transparent);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.footer__powered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.powered-label {
+    font-size: 1.1rem;
+    color: var(--c-content);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.dw-brand-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: transform 0.3s ease;
+}
+
+.dw-brand-link:hover {
+    transform: scale(1.05);
+}
+
+.dw-main-logo {
+    display: flex;
+    align-items: stretch;
+    /* Match height */
+    border: 2px solid #E60045;
+    /* Digital Win Pink/Red */
+    padding: 4px;
+    background: transparent;
+}
+
+.dw-digital {
+    background-color: #E60045;
+    color: white;
+    font-weight: 800;
+    padding: 6px 12px;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    font-family: 'Inter', sans-serif;
+}
+
+.dw-win {
+    color: #E60045;
+    font-weight: 800;
+    padding: 6px 12px;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+.dw-technologies {
+    width: 100%;
+    color: #E60045;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    /* Wide tracking */
+    text-align: center;
+    text-indent: 0.4em;
+    /* Offset for tracking center */
+}
+
+.dw-tagline {
+    color: var(--c-content);
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.copyright {
     font-size: 0.9rem;
     color: color-mix(in srgb, var(--c-content) 50%, transparent);
+    margin: 0;
 }
 
 @media (max-width: 900px) {
@@ -1393,5 +1713,17 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
 
     100% {
         transform: scale(1, 1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

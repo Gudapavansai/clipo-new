@@ -1,0 +1,18 @@
+body {
+    background-image: url('images/CLipo Bg  White.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed !important;
+    min-height: 100vh;
+}
+
+body:has(input[value="dark"]:checked) {
+    background-image: url('images/CLipo Bg  Black.png');
+    background-attachment: fixed !important;
+}
+
+body:has(input[value="dim"]:checked) {
+    background-image: url('images/CLipo Bg  Black.png');
+    background-attachment: fixed !important;
+}

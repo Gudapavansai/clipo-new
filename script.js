@@ -90,13 +90,28 @@ if (themeToggle && lightRadio && darkRadio) {
 
 // Navigation - scroll to sections on click
 const navInputs = document.querySelectorAll('.switcher input[type="radio"]');
+const navOptions = Array.from(document.querySelectorAll('.switcher__option'));
 
-navInputs.forEach(input => {
+navInputs.forEach((input, index) => {
     input.addEventListener('change', () => {
         const sectionId = input.value;
         const section = document.getElementById(sectionId);
         if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Move bubble to clicked item
+        const bubble = document.querySelector('.switcher__bubble');
+        if (bubble && switcher) {
+            const optWidth = switcher.offsetWidth / navOptions.length;
+            const targetTranslate = index * optWidth;
+
+            bubble.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            bubble.style.transform = `translateX(${targetTranslate}px)`;
+
+            setTimeout(() => {
+                bubble.style.transition = '';
+            }, 500);
         }
     });
 });
@@ -108,28 +123,114 @@ const observerOptions = {
     threshold: 0.1
 };
 
-const observer = new IntersectionObserver((entries) => {
+const inputMap = new Map();
+navInputs.forEach((input, idx) => {
+    inputMap.set(input.value, { input, index: idx });
+});
+
+// Function to smoothly move bubble to a specific index
+function moveBubbleToIndex(index) {
+    const bubble = document.querySelector('.switcher__bubble');
+    const options = document.querySelectorAll('.switcher__option');
+    if (!bubble || options.length === 0 || !switcher) return;
+
+    // Clamp index to valid range (0 to options.length - 1)
+    const clampedIndex = Math.max(0, Math.min(index, options.length - 1));
+
+    // Calculate the width based on actual switcher width minus padding
+    const switcherPadding = 8; // 4px on each side
+    const availableWidth = switcher.offsetWidth - switcherPadding;
+    const optWidth = availableWidth / options.length;
+    const targetTranslate = clampedIndex * optWidth;
+
+    // Ensure we don't exceed the maximum position
+    const maxTranslate = (options.length - 1) * optWidth;
+    const finalTranslate = Math.min(targetTranslate, maxTranslate);
+
+    // Update bubble width to match option width
+    bubble.style.width = `${optWidth}px`;
+
+    // Apply smooth transition
+    bubble.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease';
+    bubble.style.transform = `translateX(${finalTranslate}px)`;
+
+    // Clean up transition after animation
+    setTimeout(() => {
+        bubble.style.transition = '';
+    }, 500);
+}
+
+// Initialize bubble position on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const checkedInput = document.querySelector('.switcher input:checked');
+    if (checkedInput) {
+        const data = inputMap.get(checkedInput.value);
+        if (data) {
+            // Set initial position without animation
+            const bubble = document.querySelector('.switcher__bubble');
+            const options = document.querySelectorAll('.switcher__option');
+            if (bubble && options.length > 0 && switcher) {
+                const switcherPadding = 8; // 4px on each side
+                const availableWidth = switcher.offsetWidth - switcherPadding;
+                const optWidth = availableWidth / options.length;
+                bubble.style.width = `${optWidth}px`;
+                bubble.style.transform = `translateX(${data.index * optWidth}px)`;
+            }
+        }
+    }
+});
+
+// IntersectionObserver to update bubble when sections come into view
+const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const sectionId = entry.target.getAttribute('id');
-            // Find input efficiently
-            const correspondingInput = document.querySelector(`.switcher input[value="${sectionId}"]`);
+            const data = inputMap.get(sectionId);
 
-            if (correspondingInput && !correspondingInput.checked) {
-                // Programmatically setting checked does not trigger 'change' event
-                correspondingInput.checked = true;
-                // Update previous tracking for bubble animation
-                switcher.setAttribute('c-previous', correspondingInput.getAttribute('c-option'));
+            if (data && !data.input.checked) {
+                data.input.checked = true;
+                switcher.setAttribute('c-previous', data.input.getAttribute('c-option'));
+                moveBubbleToIndex(data.index);
             }
         }
     });
 }, observerOptions);
 
-const sections = document.querySelectorAll('section');
-sections.forEach(section => observer.observe(section));
+// Observe all sections with IDs
+const sections = document.querySelectorAll('section[id]');
+sections.forEach(section => sectionObserver.observe(section));
+
+// Additional scroll-based update for reliability
+let scrollTimeout = null;
+window.addEventListener('scroll', () => {
+    // Debounce scroll updates
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        const scrollPos = window.scrollY + window.innerHeight * 0.4;
+
+        let currentSection = null;
+        sections.forEach(section => {
+            if (section.offsetTop <= scrollPos) {
+                currentSection = section;
+            }
+        });
+
+        if (currentSection) {
+            const sectionId = currentSection.getAttribute('id');
+            const data = inputMap.get(sectionId);
+
+            if (data && !data.input.checked) {
+                data.input.checked = true;
+                switcher.setAttribute('c-previous', data.input.getAttribute('c-option'));
+                moveBubbleToIndex(data.index);
+            }
+        }
+    }, 50);
+}, { passive: true });
 
 // Drag navigation bubble to switch sections
 let isDragging = false;
+let ignoreClick = false;
 let startX = 0;
 let initialTranslate = 0;
 let maxTranslate = 0;
@@ -188,8 +289,10 @@ function startDrag(e) {
     }
 
     isDragging = true;
+    ignoreClick = false;
     startX = clientX;
 
+    // Prevent default to stop text selection/native dragging
     if (e.cancelable) e.preventDefault();
 
     updateLayout();
@@ -217,6 +320,11 @@ function moveDrag(e) {
     const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     const deltaX = clientX - startX;
 
+    // If moved significantly, treat as drag (suppress click)
+    if (Math.abs(deltaX) > 5) {
+        ignoreClick = true;
+    }
+
     let newPos = initialTranslate + deltaX;
     newPos = Math.max(0, Math.min(newPos, maxTranslate));
 
@@ -238,16 +346,27 @@ function endDrag() {
     const clampedIndex = Math.max(0, Math.min(nearestIndex, options.length - 1));
     const finalTranslate = clampedIndex * optWidth;
 
+    // Snap animation
     bubble.style.transform = `translateX(${finalTranslate}px)`;
     bubble.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
 
+    // Update input state
     const input = options[clampedIndex].querySelector('input');
+    // Only dispatch change if we actually changed tabs
     if (!input.checked) {
         input.checked = true;
         input.dispatchEvent(new Event('change'));
+
+        // Also update the switcher's c-previous attribute
+        const previousValue = switcher.getAttribute('c-previous');
+        switcher.setAttribute('c-previous', previousValue);
     }
 
+    // Cleanup style after animation
     setTimeout(() => { bubble.style.transition = ''; }, 400);
+
+    // Reset click ignore flag after short delay
+    setTimeout(() => { ignoreClick = false; }, 50);
 
     document.removeEventListener('mousemove', moveDrag);
     document.removeEventListener('touchmove', moveDrag);
@@ -256,5 +375,68 @@ function endDrag() {
     document.removeEventListener('touchcancel', endDrag);
 }
 
+// Event Listeners
 switcher.addEventListener('mousedown', startDrag);
 switcher.addEventListener('touchstart', startDrag, { passive: false });
+
+// Robust Click Suppression
+switcher.addEventListener('click', (e) => {
+    if (isDragging || ignoreClick) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+});
+
+// ==========================================
+// GSAP handles scroll animations in script-animations.js
+// ==========================================
+
+// ==========================================
+// Contact Form Submission to Google Sheets
+// ==========================================
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw31N52W_a9osfowfMOjgEsiJpGwHvBjQuAX4FSfmpptrD-aHXImaBbjI50RB2VAr44ew/exec';
+
+const form = document.getElementById('contactForm');
+
+if (form) {
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        // Warning: using the spreadsheet URL directly will cause a CORS/Network error.
+        // You MUST deploy the Apps Script as a Web App to get the correct 'script.google.com' URL.
+
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Sending...';
+        submitBtn.disabled = true;
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+                // If the response is not ok (e.g. 404, 500, 401), we throw an error to be caught below
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status} ${response.statusText}`);
+                }
+                alert("Thank you! Your message has been sent successfully.");
+                form.reset();
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error details:', error);
+
+                // More helpful error message for common issues
+                let errorMessage = "Something went wrong. Please try again.";
+
+                if (error.message && (error.message.includes('405') || error.message.includes('401') || error.message.includes('403') || error.message === 'Failed to fetch')) {
+                    errorMessage = "Connection Error (" + error.message + ").\n\nPossible Cause: Google Script permissions.\nSolution: Redeploy as 'Web App' and set 'Who has access' to 'Anyone'.";
+                } else if (error.message) {
+                    errorMessage = "Error: " + error.message;
+                }
+
+                alert(errorMessage);
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            });
+    });
+}
