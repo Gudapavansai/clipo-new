@@ -940,6 +940,8 @@ img {
 .about__visions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    /* Equal height rows */
     gap: 24px;
     width: 100%;
     margin-top: 40px;
@@ -951,21 +953,29 @@ img {
         grid-template-columns: 1fr;
     }
 
+    .about {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
     .about__card {
         padding: 24px;
-        /* Reduced from 32px for smaller feel */
-        max-width: 450px;
+        max-width: calc(100% - 32px);
         width: 100%;
         gap: 24px;
-        /* Fix gap for mobile compactness */
         box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .about__visions {
         margin-top: 24px;
-        /* Reduce top margin */
         gap: 16px;
-        /* Reduce grid gap */
+    }
+
+    .vision-card {
+        min-height: 180px;
+        padding: 20px;
     }
 }
 
@@ -977,6 +987,8 @@ img {
     align-items: flex-start;
     padding: 24px;
     height: 100%;
+    min-height: 200px;
+    /* Minimum height for consistency */
     box-sizing: border-box;
 
     /* Nested Glass Card Styling */
@@ -993,6 +1005,11 @@ img {
     -webkit-backdrop-filter: blur(12px);
 
     transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Make paragraph fill remaining space for equal height */
+.vision-card p {
+    flex-grow: 1;
 }
 
 .vision-card:hover {
