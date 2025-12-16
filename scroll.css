@@ -52,3 +52,31 @@
         transform: translateX(-50%) translateY(-5px);
     }
 }
+
+/* Responsive Scroll Indicator */
+@media (max-width: 768px) {
+    .scroll-indicator {
+        width: 40px;
+        height: 40px;
+        bottom: 100px;
+        /* Above mobile nav */
+    }
+
+    .scroll-indicator svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-indicator {
+        width: 36px;
+        height: 36px;
+        bottom: 90px;
+    }
+
+    .scroll-indicator svg {
+        width: 18px;
+        height: 18px;
+    }
+}

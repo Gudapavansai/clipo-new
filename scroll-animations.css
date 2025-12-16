@@ -256,3 +256,133 @@
     font-family: 'Inter', sans-serif;
     letter-spacing: -10px;
 }
+
+/* Additional Responsive Breakpoints for Scroll Animations */
+@media (max-width: 768px) {
+    .sticky-story-section {
+        padding: 60px 0;
+    }
+
+    .sticky-story-track {
+        padding: 0 20px;
+        gap: 30px;
+    }
+
+    .story-card {
+        min-height: 350px;
+        padding: 40px;
+        border-radius: 24px;
+    }
+
+    .story-card h3 {
+        font-size: 2rem;
+    }
+
+    .story-card p {
+        font-size: 1rem;
+    }
+
+    .story-card::after {
+        font-size: 120px;
+        bottom: -20px;
+        right: -10px;
+    }
+
+    .scrolling-content {
+        gap: 8vh;
+    }
+
+    .process-steps {
+        margin-top: 40px;
+        padding-left: 24px;
+    }
+
+    .process-step {
+        font-size: 1.2rem;
+        padding: 16px 0;
+    }
+
+    .process-step::before {
+        left: -30px;
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sticky-story-section {
+        padding: 40px 0;
+    }
+
+    .sticky-story-track {
+        padding: 0 16px;
+        gap: 24px;
+    }
+
+    .story-card {
+        min-height: 280px;
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+    .story-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .story-card p {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+
+    .story-card::after {
+        font-size: 80px;
+        bottom: -10px;
+        letter-spacing: -5px;
+    }
+
+    .scrolling-content {
+        gap: 6vh;
+    }
+
+    .process-steps {
+        margin-top: 30px;
+        padding-left: 20px;
+    }
+
+    .process-step {
+        font-size: 1rem;
+        padding: 12px 0;
+    }
+
+    .process-step::before {
+        left: -26px;
+        width: 8px;
+        height: 8px;
+    }
+
+    /* Reduce blur for performance on mobile */
+    .liquid-reveal {
+        filter: blur(10px);
+        transform: translateY(30px) scale(0.98);
+    }
+
+    .story-card {
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+    }
+}
+
+@media (max-width: 360px) {
+    .story-card {
+        padding: 20px;
+        min-height: 240px;
+    }
+
+    .story-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .story-card::after {
+        font-size: 60px;
+    }
+}

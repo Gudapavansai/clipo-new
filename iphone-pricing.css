@@ -81,3 +81,92 @@
 }
 
 /* Adjust grid for better spacing if needed */
+
+/* Responsive styles for iPhone Pricing */
+@media (max-width: 992px) {
+    .pricing-header-iphone h3 {
+        font-size: 1.75rem;
+    }
+
+    .pricing-card.iphone-card .price {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pricing-header-iphone {
+        margin-bottom: 30px;
+    }
+
+    .pricing-header-iphone h3 {
+        font-size: 1.5rem;
+    }
+
+    .pricing-card.iphone-card {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .pricing-card.iphone-card .price {
+        font-size: 2rem;
+    }
+
+    .pricing-card.iphone-card .pricing-divider {
+        width: 50px;
+        height: 3px;
+        margin-bottom: 24px;
+    }
+
+    .pricing-card.iphone-card .features li {
+        padding: 6px 0;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-header-iphone {
+        margin-bottom: 24px;
+    }
+
+    .pricing-header-iphone h3 {
+        font-size: 1.3rem;
+    }
+
+    .pricing-card.iphone-card {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .pricing-card.iphone-card .price {
+        font-size: 1.8rem;
+        margin-bottom: 16px;
+    }
+
+    .pricing-card.iphone-card .pricing-divider {
+        width: 40px;
+        margin-bottom: 20px;
+    }
+
+    .pricing-card.iphone-card .features {
+        font-size: 0.85rem;
+    }
+
+    .pricing-card.iphone-card .features li {
+        padding: 5px 0;
+    }
+
+    .feature-note {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 360px) {
+    .pricing-card.iphone-card .price {
+        font-size: 1.6rem;
+    }
+
+    .pricing-card.iphone-card .features {
+        font-size: 0.8rem;
+    }
+}

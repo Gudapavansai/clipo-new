@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('background.css');
-@import url('footer.css');
+/* @import url('footer.css'); */
 @import url('scroll.css');
 @import url('animations.css');
 @import url('iphone-pricing.css');
@@ -338,11 +338,12 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 /* Responsive Switcher: Show icons, hide text on small screens */
 @media (max-width: 600px) {
     .switcher__text {
-        display: none;
+        display: block;
+        font-size: 11px;
     }
 
     .switcher__icon-svg {
-        display: block;
+        display: none;
     }
 
     .switcher {
@@ -949,6 +950,23 @@ img {
     .about__visions {
         grid-template-columns: 1fr;
     }
+
+    .about__card {
+        padding: 24px;
+        /* Reduced from 32px for smaller feel */
+        max-width: 450px;
+        width: 100%;
+        gap: 24px;
+        /* Fix gap for mobile compactness */
+        box-sizing: border-box;
+    }
+
+    .about__visions {
+        margin-top: 24px;
+        /* Reduce top margin */
+        gap: 16px;
+        /* Reduce grid gap */
+    }
 }
 
 /* Vision cards now removed styling to just content */
@@ -957,13 +975,29 @@ img {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0;
-    /* Removed card styling */
-    background: none;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border: none;
+    padding: 24px;
+    height: 100%;
+    box-sizing: border-box;
+
+    /* Nested Glass Card Styling */
+    background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+    border-radius: 24px;
+
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        0px 2px 8px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 5%), transparent);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.vision-card:hover {
+    transform: translateY(-4px);
+    background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
 }
 
 .vision-icon {
@@ -1067,6 +1101,7 @@ img {
         width: 100%;
         max-width: 450px;
         /* Prevent too wide on mobile */
+        margin: 0 auto;
     }
 }
 
@@ -1405,7 +1440,9 @@ textarea.glass-input {
 
     .contact__card {
         grid-template-columns: 1fr;
-        padding: 30px;
+        padding: 24px;
+        gap: 24px;
+        margin: 0 auto;
     }
 
     .pricing-card.featured {
@@ -1440,8 +1477,13 @@ textarea.glass-input {
 .footer {
     padding: 80px 60px 40px;
     margin-top: 100px;
-    border-top: 1px solid color-mix(in srgb, var(--c-content) 5%, transparent);
-    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--c-glass) 10%, transparent));
+    border-top: 1px solid color-mix(in srgb, var(--c-light) 20%, transparent);
+
+    /* Thick Glass Effect */
+    background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .footer__content {
@@ -1487,9 +1529,9 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
 }
 
 .footer__tagline {
-    font-size: 1rem;
-    color: color-mix(in srgb, var(--c-content) 60%, transparent);
-    line-height: 1.6;
+    font-size: 0.9rem;
+    color: var(--c-content);
+    line-height: 1.5;
 }
 
 .footer__links {
@@ -1514,8 +1556,8 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
 }
 
 .footer__col a {
-    font-size: 0.95rem;
-    color: color-mix(in srgb, var(--c-content) 70%, transparent);
+    font-size: 0.85rem;
+    color: var(--c-content);
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -1726,4 +1768,1144 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ==========================================
+   Comprehensive Responsive Styles - All Devices
+   ========================================== */
+
+/* Extra Large Screens (1400px+) */
+@media (min-width: 1400px) {
+    .hero {
+        max-width: 1400px;
+        gap: 100px;
+    }
+
+    .section {
+        max-width: 1400px;
+    }
+
+    .footer__content {
+        max-width: 1400px;
+    }
+}
+
+/* Large Tablets / Small Laptops (992px - 1200px) */
+@media (max-width: 1200px) {
+    .hero {
+        gap: 60px;
+        padding: 100px 40px;
+    }
+
+    .section {
+        padding: 80px 40px;
+        gap: 50px;
+    }
+
+    .services__grid,
+    .pricing__grid {
+        gap: 24px;
+    }
+
+    .service-card,
+    .pricing-card {
+        width: calc((100% - 48px) / 3);
+        flex: 0 0 calc((100% - 48px) / 3);
+        padding: 28px;
+    }
+
+    .contact__card,
+    .about__card {
+        padding: 50px;
+    }
+}
+
+/* Tablets (768px - 992px) */
+@media (max-width: 992px) {
+    body {
+        font-size: 18px;
+    }
+
+    .hero {
+        flex-direction: column;
+        gap: 50px;
+        padding: 80px 30px;
+        min-height: auto;
+    }
+
+    .hero__content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero__buttons {
+        justify-content: center;
+    }
+
+    .hero__description {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero__device {
+        width: 280px;
+        height: 380px;
+    }
+
+    .section {
+        padding: 70px 24px;
+        gap: 45px;
+    }
+
+    .section__title {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+    }
+
+    /* Services Grid - 2 columns */
+    .services__grid {
+        gap: 20px;
+    }
+
+    .service-card {
+        width: calc((100% - 20px) / 2);
+        flex: 0 0 calc((100% - 20px) / 2);
+        padding: 24px;
+        min-height: 280px;
+    }
+
+    /* Pricing Grid - 2 columns */
+    .pricing__grid {
+        gap: 20px;
+    }
+
+    .pricing-card {
+        width: calc((100% - 20px) / 2);
+        flex: 0 0 calc((100% - 20px) / 2);
+    }
+
+    /* About Section */
+    .about__card {
+        padding: 40px;
+    }
+
+    .about__visions {
+        gap: 20px;
+    }
+
+    .about__stats {
+        gap: 30px;
+        padding-top: 30px;
+        margin-top: 30px;
+    }
+
+    .stat__number {
+        font-size: 2rem;
+    }
+
+    /* Contact Section */
+    .contact__card {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px;
+    }
+
+    .contact__content {
+        text-align: center;
+        align-items: center;
+    }
+
+    .contact__content .section__title {
+        font-size: 2.5rem;
+    }
+
+    .contact__content .section__desc {
+        max-width: 100%;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 60px 24px 100px;
+    }
+
+    .footer__content {
+        gap: 40px;
+    }
+
+    .footer__links {
+        gap: 50px;
+    }
+}
+
+/* Small Tablets / Large Phones (600px - 768px) */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    .navbar {
+        padding: 16px 20px;
+    }
+
+    .navbar__actions {
+        padding: 16px 20px;
+    }
+
+    .navbar__logo {
+        height: 32px;
+    }
+
+    .hero {
+        padding: 60px 20px;
+        gap: 40px;
+    }
+
+    .hero__badge {
+        font-size: 10px;
+        padding: 6px 12px;
+    }
+
+    .hero__title {
+        font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    .hero__description {
+        font-size: 14px;
+    }
+
+    .hero__buttons {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .hero__btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 14px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .hero__device {
+        width: 260px;
+        height: 340px;
+    }
+
+    .section {
+        padding: 50px 16px;
+        gap: 35px;
+    }
+
+    .section__title {
+        font-size: clamp(1.6rem, 5vw, 2.2rem);
+        margin-bottom: 16px;
+    }
+
+    .section__desc,
+    .section__subtitle {
+        font-size: 1rem;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    /* Services Grid - 1 column */
+    .services__grid {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .service-card {
+        width: 100%;
+        max-width: 400px;
+        min-height: auto;
+        padding: 24px;
+        margin: 0 auto;
+    }
+
+    .service-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+    }
+
+    .service-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .service-card p {
+        font-size: 0.9rem;
+    }
+
+    /* Pricing Grid - 1 column */
+    .pricing__grid {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .pricing-card {
+        width: 100%;
+        max-width: 400px;
+        flex: auto;
+        margin: 0 auto;
+    }
+
+    .price {
+        font-size: 2rem;
+    }
+
+    .features li {
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+
+    /* About Section */
+    .about__card {
+        padding: 24px;
+        max-width: 100%;
+    }
+
+    .about__visions {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    .vision-card {
+        padding: 20px;
+    }
+
+    .vision-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .vision-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .vision-card p {
+        font-size: 0.9rem;
+    }
+
+    .about__stats {
+        gap: 20px;
+        padding-top: 24px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .stat__number {
+        font-size: 1.8rem;
+    }
+
+    .stat__label {
+        font-size: 0.75rem;
+    }
+
+    /* Contact Section */
+    .contact__card {
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .contact__content .section__title {
+        font-size: 2rem;
+    }
+
+    .glass-input {
+        padding: 14px 18px;
+        font-size: 0.95rem;
+    }
+
+    textarea.glass-input {
+        min-height: 100px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 40px 16px 100px;
+    }
+
+    .footer__content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer__brand {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .footer__logo {
+        margin: 0 auto 16px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer__links {
+        width: 100%;
+        justify-content: space-around;
+        gap: 30px;
+    }
+
+    .footer__col {
+        text-align: center;
+        align-items: center;
+    }
+
+    .footer__bottom {
+        margin-top: 40px;
+        padding-top: 30px;
+        gap: 20px;
+    }
+
+    .dw-digital,
+    .dw-win {
+        font-size: 1.1rem;
+        padding: 4px 10px;
+    }
+
+    .dw-technologies {
+        font-size: 0.7rem;
+    }
+
+    /* Pricing Section Header */
+    .pricing-header-iphone h3 {
+        font-size: 1.5rem;
+    }
+
+    .pricing__footer {
+        font-size: 0.95rem;
+        padding: 0 16px;
+    }
+}
+
+/* Small Phones (480px and below) */
+@media (max-width: 480px) {
+    body {
+        font-size: 15px;
+    }
+
+    .navbar {
+        padding: 12px 16px;
+    }
+
+    .navbar__actions {
+        padding: 12px 16px;
+    }
+
+    .navbar__logo {
+        height: 28px;
+    }
+
+    .navbar__icon {
+        padding: 10px;
+    }
+
+    .hero {
+        padding: 50px 16px;
+        gap: 30px;
+    }
+
+    .hero__badge {
+        font-size: 9px;
+        padding: 5px 10px;
+        gap: 6px;
+    }
+
+    .hero__badge-dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .hero__title {
+        font-size: clamp(1.8rem, 7vw, 2.5rem);
+        margin-bottom: 16px;
+    }
+
+    .hero__description {
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+    }
+
+    .hero__buttons {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .hero__btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 14px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .hero__device {
+        width: 220px;
+        height: 300px;
+        padding: 8px;
+    }
+
+    .hero__play-btn {
+        width: 40px;
+        height: 40px;
+        bottom: 12px;
+        left: 12px;
+    }
+
+    .section {
+        padding: 40px 12px;
+        gap: 30px;
+    }
+
+    .section__title {
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
+        margin-bottom: 12px;
+    }
+
+    .section__desc,
+    .section__subtitle {
+        font-size: 0.9rem;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    /* Service Cards */
+    .service-card {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .service-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* Pricing Cards */
+    .pricing-card {
+        max-width: 100%;
+        padding: 24px 20px;
+    }
+
+    .price {
+        font-size: 1.8rem;
+    }
+
+    .price .currency {
+        font-size: 1.2rem;
+    }
+
+    /* About Section */
+    .about__card {
+        padding: 20px;
+    }
+
+    .about__stats {
+        gap: 16px;
+    }
+
+    .stat {
+        min-width: 80px;
+    }
+
+    .stat__number {
+        font-size: 1.5rem;
+    }
+
+    .stat__label {
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+    }
+
+    /* Contact Section */
+    .contact__card {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .contact__content .section__title {
+        font-size: 1.6rem;
+    }
+
+    .contact__content .section__desc {
+        font-size: 0.9rem;
+    }
+
+    .glass-input {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        border-radius: 12px;
+    }
+
+    textarea.glass-input {
+        min-height: 80px;
+        border-radius: 12px;
+    }
+
+    .navbar__btn.full-width {
+        padding: 14px 20px;
+        font-size: 14px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 30px 12px 100px;
+    }
+
+    .footer__tagline {
+        font-size: 0.85rem;
+    }
+
+    .footer__links {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .footer__col {
+        gap: 12px;
+    }
+
+    .footer__col h4 {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .footer__col a {
+        font-size: 0.8rem;
+    }
+
+    .social-link {
+        width: 36px;
+        height: 36px;
+    }
+
+    .social-link svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .footer__bottom {
+        gap: 16px;
+    }
+
+    .powered-label {
+        font-size: 0.95rem;
+    }
+
+    .dw-digital,
+    .dw-win {
+        font-size: 1rem;
+        padding: 4px 8px;
+    }
+
+    .dw-technologies {
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+    }
+
+    .dw-tagline {
+        font-size: 0.8rem;
+    }
+
+    .copyright {
+        font-size: 0.75rem;
+    }
+
+    /* Switcher (Navigation) */
+    .switcher {
+        height: 44px;
+        bottom: 16px;
+        padding: 3px;
+    }
+
+    .switcher__text {
+        font-size: 10px;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+        width: 36px;
+        height: 36px;
+    }
+
+    .scroll-indicator svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Extra Small Phones (360px and below) */
+@media (max-width: 360px) {
+    .hero__title {
+        font-size: 1.6rem;
+    }
+
+    .hero__description {
+        font-size: 12px;
+    }
+
+    .hero__device {
+        width: 200px;
+        height: 270px;
+    }
+
+    .section__title {
+        font-size: 1.3rem;
+    }
+
+    .stat__number {
+        font-size: 1.3rem;
+    }
+
+    .price {
+        font-size: 1.6rem;
+    }
+
+    .switcher {
+        --w: calc((100vw - 16px) / 5);
+    }
+
+    .switcher__text {
+        font-size: 9px;
+    }
+}
+
+/* Landscape Mode - Small Devices */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 30px 40px;
+        flex-direction: row;
+        gap: 40px;
+    }
+
+    .hero__content {
+        text-align: left;
+    }
+
+    .hero__buttons {
+        justify-content: flex-start;
+    }
+
+    .hero__device {
+        width: 200px;
+        height: 280px;
+    }
+
+    .section {
+        padding: 40px 30px;
+    }
+}
+
+/* Print Styles */
+@media print {
+
+    .navbar,
+    .navbar__actions,
+    .switcher,
+    .scroll-indicator,
+    .background-container {
+        display: none !important;
+    }
+
+    .hero,
+    .section {
+        padding: 20px;
+    }
+
+    .glass-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+/* ==========================================
+   PREMIUM GLASSMORPHISM - Apple-Style UI
+   Unified Design System for All Sections
+   ========================================== */
+
+/* Global Smooth Transitions */
+*,
+*::before,
+*::after {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced Section Styling - Equal Visual Weight */
+.section {
+    position: relative;
+}
+
+/* Premium Glass Effect Variables */
+:root {
+    --glass-blur: 20px;
+    --glass-blur-strong: 40px;
+    --glass-saturation: 180%;
+    --glass-border-opacity: 0.1;
+    --shadow-soft: 0 4px 30px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 8px 40px rgba(0, 0, 0, 0.12);
+    --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.15);
+    --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --radius-sm: 16px;
+    --radius-md: 24px;
+    --radius-lg: 32px;
+    --radius-xl: 40px;
+}
+
+/* Premium Glass Card - Unified Style */
+.glass-card,
+.service-card,
+.pricing-card,
+.vision-card,
+.contact__card,
+.about__card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--c-light) 15%, transparent);
+}
+
+/* Subtle Inner Glow for Premium Effect */
+.glass-card::before,
+.service-card::before,
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            color-mix(in srgb, var(--c-light) 40%, transparent) 50%,
+            transparent);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Equal Height Cards in Grids */
+.services__grid,
+.pricing__grid {
+    align-items: stretch;
+}
+
+.service-card,
+.pricing-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.service-card p,
+.pricing-card .features {
+    flex-grow: 1;
+}
+
+/* Enhanced Hover Effects - Apple Style */
+.glass-card:hover,
+.service-card:hover,
+.pricing-card:hover,
+.vision-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.15),
+        0 10px 30px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) 20%, transparent);
+    border-color: color-mix(in srgb, var(--c-light) 25%, transparent);
+}
+
+/* Smooth Focus States for Accessibility */
+.glass-card:focus-within,
+.hero__btn:focus,
+.navbar__btn:focus,
+.glass-input:focus {
+    outline: none;
+    box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--c-action) 30%, transparent),
+        var(--shadow-medium);
+}
+
+/* Enhanced Buttons - Apple Style */
+.hero__btn,
+.navbar__btn {
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-smooth);
+}
+
+.hero__btn::after,
+.navbar__btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle,
+            color-mix(in srgb, var(--c-light) 20%, transparent) 0%,
+            transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.hero__btn:hover::after,
+.navbar__btn:hover::after {
+    opacity: 1;
+}
+
+.hero__btn:active,
+.navbar__btn:active {
+    transform: scale(0.98);
+}
+
+/* Section Headers - Unified Typography */
+.section__title {
+    position: relative;
+    display: inline-block;
+}
+
+.section__title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--c-action), color-mix(in srgb, var(--c-action) 50%, transparent));
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.section:hover .section__title::after {
+    opacity: 1;
+}
+
+/* Unified Input Styling */
+.glass-input {
+    transition: all var(--transition-smooth);
+    border: 1px solid color-mix(in srgb, var(--c-light) 15%, transparent);
+}
+
+.glass-input:hover {
+    border-color: color-mix(in srgb, var(--c-light) 25%, transparent);
+    background-color: color-mix(in srgb, var(--c-glass) 18%, transparent);
+}
+
+/* Premium Stats Display */
+.stat {
+    transition: transform var(--transition-smooth);
+}
+
+.stat:hover {
+    transform: scale(1.05);
+}
+
+.stat__number {
+    background: linear-gradient(135deg, var(--c-content), color-mix(in srgb, var(--c-action) 30%, var(--c-content)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Enhanced Service Icons */
+.service-icon,
+.vision-icon {
+    transition: all var(--transition-spring);
+}
+
+.service-card:hover .service-icon,
+.vision-card:hover .vision-icon {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--c-action) 30%, transparent);
+}
+
+/* Pricing Card Enhancements */
+.pricing-card .price {
+    transition: transform var(--transition-smooth);
+}
+
+.pricing-card:hover .price {
+    transform: scale(1.05);
+}
+
+.pricing-divider {
+    transition: width var(--transition-smooth);
+}
+
+.pricing-card:hover .pricing-divider {
+    width: 80px;
+}
+
+/* Footer Enhancement */
+.footer {
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            color-mix(in srgb, var(--c-content) 20%, transparent) 50%,
+            transparent);
+}
+
+/* Social Links Enhanced */
+.social-link {
+    transition: all var(--transition-spring);
+}
+
+.social-link:hover {
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Scroll Indicator Enhancement */
+.scroll-indicator {
+    transition: all var(--transition-spring);
+}
+
+.scroll-indicator:hover {
+    transform: translateX(-50%) translateY(-5px) scale(1.1);
+}
+
+/* ==========================================
+   RESPONSIVE GLASSMORPHISM ADJUSTMENTS
+   ========================================== */
+
+@media (max-width: 992px) {
+    :root {
+        --glass-blur: 15px;
+        --glass-blur-strong: 30px;
+        --radius-lg: 28px;
+        --radius-xl: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --glass-blur: 12px;
+        --glass-blur-strong: 20px;
+        --radius-lg: 24px;
+        --radius-xl: 32px;
+    }
+
+    /* Reduce hover effects on mobile for better performance */
+    .glass-card:hover,
+    .service-card:hover,
+    .pricing-card:hover,
+    .vision-card:hover {
+        transform: translateY(-4px);
+    }
+
+    /* Simpler shadows on mobile */
+    .glass-card,
+    .service-card,
+    .pricing-card {
+        box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.1),
+            inset 0 0 0 1px color-mix(in srgb, var(--c-light) 10%, transparent);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --glass-blur: 10px;
+        --glass-blur-strong: 15px;
+        --radius-lg: 20px;
+        --radius-xl: 24px;
+    }
+
+    /* Even simpler effects for small devices */
+    .glass-card:hover,
+    .service-card:hover,
+    .pricing-card:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Disable decorative pseudo-elements on mobile */
+    .section__title::after {
+        display: none;
+    }
+
+    .glass-card::before,
+    .service-card::before,
+    .pricing-card::before {
+        display: none;
+    }
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .glass-card:hover,
+    .service-card:hover,
+    .pricing-card:hover,
+    .vision-card:hover {
+        transform: none;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+
+    .glass-card,
+    .service-card,
+    .pricing-card,
+    .vision-card {
+        border: 2px solid var(--c-content);
+        background-color: var(--c-bg);
+    }
+}
+
+/* Dark Mode Glassmorphism Enhancements */
+body:has(input[value="dark"]:checked) .glass-card,
+body:has(input[value="dark"]:checked) .service-card,
+body:has(input[value="dark"]:checked) .pricing-card,
+body:has(input[value="dim"]:checked) .glass-card,
+body:has(input[value="dim"]:checked) .service-card,
+body:has(input[value="dim"]:checked) .pricing-card {
+    border-color: color-mix(in srgb, var(--c-light) 8%, transparent);
+    background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+}
+
+body:has(input[value="dark"]:checked) .glass-card:hover,
+body:has(input[value="dark"]:checked) .service-card:hover,
+body:has(input[value="dark"]:checked) .pricing-card:hover,
+body:has(input[value="dim"]:checked) .glass-card:hover,
+body:has(input[value="dim"]:checked) .service-card:hover,
+body:has(input[value="dim"]:checked) .pricing-card:hover {
+    border-color: color-mix(in srgb, var(--c-light) 15%, transparent);
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
 }

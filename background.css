@@ -1,18 +1,86 @@
-body {
+/* ==========================================
+   Fixed Background - Works on All Devices
+   ========================================== */
+
+/* Hide the gradient orbs on the background container if not needed */
+.background-container {
+    display: none;
+}
+
+/* Use a pseudo-element for truly fixed background on all devices */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
     background-image: url('images/CLipo Bg  White.png');
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed !important;
+    pointer-events: none;
+    will-change: transform;
+    /* Performance optimization */
+}
+
+/* Ensure body has proper setup */
+body {
+    position: relative;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-body:has(input[value="dark"]:checked) {
+/* Dark mode background */
+body:has(input[value="dark"]:checked)::before {
     background-image: url('images/CLipo Bg  Black.png');
-    background-attachment: fixed !important;
 }
 
-body:has(input[value="dim"]:checked) {
+/* Dim mode background */
+body:has(input[value="dim"]:checked)::before {
     background-image: url('images/CLipo Bg  Black.png');
-    background-attachment: fixed !important;
+}
+
+/* ==========================================
+   Responsive Background Adjustments
+   ========================================== */
+
+/* Tablets */
+@media (max-width: 992px) {
+    body::before {
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 768px) {
+    body::before {
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+    body::before {
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+/* Landscape Mode on Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    body::before {
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+/* Very tall screens (ensure full coverage) */
+@media (min-height: 1200px) {
+    body::before {
+        background-size: cover;
+    }
 }
