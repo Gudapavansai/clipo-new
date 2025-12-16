@@ -1164,10 +1164,23 @@ img {
 }
 
 @media (max-width: 768px) {
+    .pricing {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .pricing__grid {
+        gap: 20px;
+        padding: 0;
+    }
+
     .pricing-card {
         --cols: 1;
         width: 100%;
+        max-width: calc(100% - 32px);
         flex: auto;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

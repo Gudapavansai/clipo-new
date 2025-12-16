@@ -96,6 +96,7 @@
 @media (max-width: 768px) {
     .pricing-header-iphone {
         margin-bottom: 30px;
+        padding: 0 16px;
     }
 
     .pricing-header-iphone h3 {
@@ -104,8 +105,10 @@
 
     .pricing-card.iphone-card {
         width: 100%;
-        max-width: 400px;
+        max-width: calc(100% - 32px);
         margin: 0 auto;
+        padding: 28px;
+        box-sizing: border-box;
     }
 
     .pricing-card.iphone-card .price {
@@ -119,14 +122,15 @@
     }
 
     .pricing-card.iphone-card .features li {
-        padding: 6px 0;
+        padding: 8px 0;
         font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     .pricing-header-iphone {
-        margin-bottom: 24px;
+        margin-bottom: 20px;
+        padding: 0 12px;
     }
 
     .pricing-header-iphone h3 {
@@ -134,8 +138,9 @@
     }
 
     .pricing-card.iphone-card {
-        padding: 20px;
-        max-width: 100%;
+        padding: 24px;
+        max-width: calc(100% - 24px);
+        margin: 0 auto;
     }
 
     .pricing-card.iphone-card .price {
@@ -153,7 +158,7 @@
     }
 
     .pricing-card.iphone-card .features li {
-        padding: 5px 0;
+        padding: 6px 0;
     }
 
     .feature-note {
