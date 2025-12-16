@@ -710,7 +710,39 @@ img {
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.hero__device:hover .hero__device-image {
+/* Video element styling */
+.hero__device-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.hero__device-video.playing {
+    opacity: 1;
+}
+
+.hero__device-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transition: opacity 0.5s ease;
+}
+
+.hero__device-poster.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero__device:hover .hero__device-image,
+.hero__device:hover .hero__device-video {
     transform: scale(1.05);
 }
 
@@ -736,11 +768,20 @@ img {
         inset -2px -2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
         0px 4px 12px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
     transition: transform 200ms, background-color 200ms, box-shadow 200ms;
+    z-index: 10;
 }
 
 .hero__play-btn:hover {
     transform: scale(1.08);
     background-color: color-mix(in srgb, var(--c-light) 85%, transparent);
+}
+
+.hero__play-btn.playing .play-icon {
+    display: none;
+}
+
+.hero__play-btn.playing .pause-icon {
+    display: block;
 }
 
 /* Responsive */

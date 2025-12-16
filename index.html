@@ -148,10 +148,32 @@
         <div class="hero__visual">
             <div class="hero__device">
                 <div class="hero__device-screen">
-                    <img src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&h=800&fit=crop" alt="Digital Art" class="hero__device-image">
-                    <button class="hero__play-btn" aria-label="Play video">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <!-- Video element with poster image -->
+                    <video 
+                        id="heroVideo"
+                        class="hero__device-video"
+                        poster="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&h=800&fit=crop"
+                        playsinline
+                        muted
+                        loop
+                    >
+                        <!-- Add your video source here -->
+                        <!-- <source src="./videos/your-video.mp4" type="video/mp4"> -->
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- Fallback image shown when no video source -->
+                    <img 
+                        src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&h=800&fit=crop" 
+                        alt="Clipo Media Showreel" 
+                        class="hero__device-image hero__device-poster"
+                        id="heroPoster"
+                    >
+                    <button class="hero__play-btn" id="heroPlayBtn" aria-label="Play video">
+                        <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <svg class="pause-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
                         </svg>
                     </button>
                 </div>
