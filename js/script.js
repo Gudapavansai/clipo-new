@@ -394,6 +394,58 @@ switcher.addEventListener('click', (e) => {
 // ==========================================
 // Contact Form Submission to Google Sheets
 // ==========================================
+
+// Custom Glassy Alert Function
+function showGlassyAlert(message) {
+    // Remove existing overlay if any (to prevent stacking)
+    const existing = document.querySelector('.custom-modal-overlay');
+    if (existing) {
+        existing.remove();
+    }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'custom-modal-overlay';
+
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal';
+
+    const content = document.createElement('div');
+    content.className = 'custom-modal-content';
+    content.innerHTML = message;
+
+    const btn = document.createElement('button');
+    btn.className = 'custom-modal-btn';
+    btn.innerText = 'OK';
+
+    // Close event
+    btn.onclick = () => {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            overlay.remove();
+        }, 300);
+    };
+
+    // Close on clicking outside (optional, but good UX)
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                overlay.remove();
+            }, 300);
+        }
+    };
+
+    modal.appendChild(content);
+    modal.appendChild(btn);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+        overlay.classList.add('active');
+    });
+}
+
 const scriptURL = 'https://script.google.com/macros/s/AKfycbw31N52W_a9osfowfMOjgEsiJpGwHvBjQuAX4FSfmpptrD-aHXImaBbjI50RB2VAr44ew/exec';
 
 const form = document.getElementById('contactForm');
@@ -404,6 +456,36 @@ if (form) {
 
         // Warning: using the spreadsheet URL directly will cause a CORS/Network error.
         // You MUST deploy the Apps Script as a Web App to get the correct 'script.google.com' URL.
+
+        // --- Validation Start ---
+        const nameInput = form.querySelector('input[name="name"]');
+        const emailInput = form.querySelector('input[name="email"]');
+        const phoneInput = form.querySelector('input[name="phone"]');
+
+        const nameVal = nameInput.value.trim();
+        const emailVal = emailInput.value.trim();
+        const phoneVal = phoneInput.value.trim();
+
+        // 1. Name: First letter must be capital
+        // We check if the first character matches [A-Z].
+        // If empty, standard required check handles it (but we check empty here too to be safe)
+        if (!nameVal || !/^[A-Z]/.test(nameVal)) {
+            showGlassyAlert("Please enter a valid Name. The first letter must be capitalized (e.g., 'John').");
+            return;
+        }
+
+        // 2. Email: Must contain "@gmail.com"
+        if (!emailVal || !emailVal.toLowerCase().includes('@gmail.com')) {
+            showGlassyAlert("Please enter a valid Gmail address (must contain @gmail.com).");
+            return;
+        }
+
+        // 3. Phone: Must have exactly 10 digits
+        if (!phoneVal || !/^\d{10}$/.test(phoneVal)) {
+            showGlassyAlert("Please enter a valid Phone Number (must be exactly <span class='number-text'>10</span> digits).");
+            return;
+        }
+        // --- Validation End ---
 
         // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -417,7 +499,7 @@ if (form) {
                 if (!response.ok) {
                     throw new Error(`Server returned ${response.status} ${response.statusText}`);
                 }
-                alert("Thank you! Your message has been sent successfully.");
+                showGlassyAlert("Thank you! Your message has been sent successfully.");
                 form.reset();
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
@@ -434,7 +516,7 @@ if (form) {
                     errorMessage = "Error: " + error.message;
                 }
 
-                alert(errorMessage);
+                showGlassyAlert(errorMessage);
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
             });

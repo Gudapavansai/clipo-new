@@ -4,7 +4,63 @@
 @import url('scroll.css');
 @import url('animations.css');
 @import url('iphone-pricing.css');
+@import url('modal.css');
 
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Qurova font is loaded via link tag in HTML */
+
+/* Qurova font variable for easy use */
+:root {
+    --font-heading: 'Qurova DEMO', sans-serif;
+    --font-body: 'Qurova DEMO', sans-serif;
+    --font-numbers: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Inter font for: numbers, phone numbers, prices, form inputs */
+.price,
+.price .currency,
+.stat__number,
+.feature-note,
+.glass-input,
+.number-text,
+a[href^="tel:"] {
+    font-family: var(--font-numbers);
+}
+
+input,
+textarea {
+    font-family: var(--font-numbers) !important;
+}
+
+/* Remove number input spinners */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+html {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+}
+
+html::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
 
 body {
     --c-glass: #bbbbbc;
@@ -22,7 +78,7 @@ body {
     --saturation: 150%;
 
     font-size: 20px;
-    font-family: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Qurova DEMO', -apple-system, BlinkMacSystemFont, sans-serif;
     font-optical-sizing: auto;
     background-color: var(--c-bg);
     color: var(--c-content);
@@ -60,6 +116,33 @@ body:has(input[value="dim"]:checked) {
     --glass-reflex-light: 0.7;
 
     --saturation: 200%;
+}
+
+/* Global Heading Styles with Qurova Font */
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+}
+
+/* Logo text styling with Qurova */
+.navbar__logo-text,
+.footer__logo-text {
+    font-family: var(--font-heading);
+}
+
+/* Paragraphs use Qurova font */
+p,
+.section__desc,
+.section__subtitle,
+.hero__description,
+.footer__tagline,
+.vision-card p {
+    font-family: var(--font-body);
+}
+
+.service-card p {
+    font-family: sans-serif;
 }
 
 /* Navbar with logo */
@@ -407,7 +490,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 }
 
 .switcher__option:has(input:checked) .switcher__text {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* Glass slider indicator */
@@ -572,6 +655,7 @@ img {
 }
 
 .hero__title {
+    font-family: var(--font-heading);
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
     line-height: 1.1;
@@ -714,6 +798,18 @@ img {
     transform: scale(1.05);
 }
 
+.hero__device-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero__device:hover .hero__device-video {
+    transform: scale(1.05);
+}
+
 .hero__play-btn {
     position: absolute;
     bottom: 20px;
@@ -769,6 +865,11 @@ img {
         justify-content: center;
     }
 
+    .hero__btn {
+        padding: 8px 14px;
+        font-size: 11px;
+    }
+
     .hero__device {
         max-width: 300px;
     }
@@ -796,7 +897,7 @@ img {
     }
 
     .navbar__logo {
-        height: 28px;
+        height: px;
         /* Smaller for mobile header */
         width: auto;
         padding: 0;
@@ -858,6 +959,7 @@ img {
 }
 
 .section__title {
+    font-family: var(--font-heading);
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     line-height: 1.1;
@@ -878,7 +980,7 @@ img {
     font-size: 1.1rem;
     line-height: 1.6;
     color: color-mix(in srgb, var(--c-content) 90%, transparent);
-    margin: 0 auto;
+    margin: 20px auto 0;
 }
 
 /* Reusable Glass Card - Restored to Liquid Glass (Navbar) Theme */
@@ -988,23 +1090,27 @@ img {
     align-items: flex-start;
     padding: 24px;
     height: 100%;
-    min-height: 200px;
+    min-height: 250px;
     /* Minimum height for consistency */
     box-sizing: border-box;
 
-    /* Nested Glass Card Styling */
-    background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
-    border-radius: 24px;
+    /* Nested Glass Card Styling - Matched to Service Card */
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    border-radius: 32px;
+    backdrop-filter: blur(8px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
 
     box-shadow:
         inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
         inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
         inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-        0px 2px 8px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 5%), transparent);
-
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -1100,6 +1206,14 @@ img {
     /* Ensure cards are strictly 3 cols */
     flex-grow: 0;
     flex-shrink: 0;
+
+    /* "Old" / Simple Glass Style Override */
+    background-color: color-mix(in srgb, var(--c-light) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-light) 15%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
 }
 
 @media (max-width: 992px) {
@@ -1170,7 +1284,7 @@ img {
     /* prevent flex-basis from overriding width if content is small */
     flex: 0 0 calc((100% - 60px) / 3);
 
-    min-height: auto;
+    min-height: 320px;
     box-sizing: border-box;
 }
 
@@ -1291,7 +1405,7 @@ img {
     /* Use standard glass card theme */
     width: 100%;
     max-width: 1000px;
-    padding: 60px;
+    padding: 40px;
     position: relative;
     overflow: hidden;
 }

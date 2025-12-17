@@ -13,16 +13,20 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -10;
-    background-image: url('images/CLipo Bg  White.png');
+    background-image: url('../images/CLipo Bg  White.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     pointer-events: none;
-    will-change: transform;
-    /* Performance optimization */
+    will-change: auto;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 /* Ensure body has proper setup */
@@ -34,12 +38,12 @@ body {
 
 /* Dark mode background */
 body:has(input[value="dark"]:checked)::before {
-    background-image: url('images/CLipo Bg  Black.png');
+    background-image: url('../images/CLipo Bg  Black.png');
 }
 
 /* Dim mode background */
 body:has(input[value="dim"]:checked)::before {
-    background-image: url('images/CLipo Bg  Black.png');
+    background-image: url('../images/CLipo Bg  Black.png');
 }
 
 /* ==========================================
