@@ -422,7 +422,8 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 @media (max-width: 600px) {
     .switcher__text {
         display: block;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 500;
     }
 
     .switcher__icon-svg {
@@ -430,8 +431,8 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     }
 
     .switcher {
-        height: 50px;
-        /* Slightly smaller on mobile */
+        height: 60px;
+        /* Larger for better touch targets */
     }
 
     .switcher__option {
