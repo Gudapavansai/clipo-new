@@ -3,6 +3,7 @@
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.innerWidth < 768;
 
     if (!window.gsap || !window.ScrollTrigger) {
         console.warn('GSAP or ScrollTrigger not loaded');
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. ABOUT SECTION - Fixed for proper alignment on refresh
     // ------------------------------------------
     const visionCards = document.querySelectorAll('.vision-card');
-    if (visionCards.length) {
+    if (visionCards.length && !isMobile) {
         // Set initial hidden state
         gsap.set(visionCards, { opacity: 0, y: 40 });
 
@@ -108,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const statItems = document.querySelectorAll('.stat');
-    if (statItems.length) {
+    if (statItems.length && !isMobile) {
         // Set initial hidden state
         gsap.set(statItems, { opacity: 0, scale: 0.6 });
 
@@ -152,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. SERVICES GRID - Fixed to prevent layout shift on refresh
     // ------------------------------------------
     const serviceCards = document.querySelectorAll('.service-card');
-    if (serviceCards.length) {
+    if (serviceCards.length && !isMobile) {
         // Set initial hidden state
         gsap.set(serviceCards, { opacity: 0, y: 30 });
 
@@ -203,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. PRICING CARDS - Fixed to prevent layout shift on refresh
     // ------------------------------------------
     const pricingCards = document.querySelectorAll('.pricing-card');
-    if (pricingCards.length) {
+    if (pricingCards.length && !isMobile) {
         // Set initial hidden state
         gsap.set(pricingCards, { opacity: 0, y: 30, scale: 0.98 });
 
