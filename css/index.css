@@ -431,7 +431,10 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
         display: block;
         font-size: 20px;
         /* Increased mobile/tablet font size */
-        font-weight: 500;
+        font-weight: 400;
+        /* Regular weight like image */
+        line-height: 1;
+        white-space: nowrap !important;
     }
 
     .switcher__icon-svg {
@@ -502,7 +505,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 }
 
 .switcher__option:has(input:checked) .switcher__text {
-    font-weight: 700;
+    font-weight: 600;
 }
 
 /* Glass slider indicator */
@@ -577,13 +580,6 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 .switcher:has(input[c-option="5"]:checked) .switcher__bubble {
     transform: translateX(calc(var(--w) * 4));
 }
-
-
-
-
-
-
-
 
 
 a {
@@ -2671,7 +2667,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     }
 
     .switcher__text {
-        font-size: 10px;
+        font-size: 15px;
     }
 
     /* Scroll Indicator */
