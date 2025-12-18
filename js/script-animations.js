@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             } else {
                 // Set up scroll trigger for cards not yet visible
-                gsap.from('.vision-card', {
+                gsap.to('.vision-card', {
                     scrollTrigger: {
                         trigger: '.about__visions',
                         start: 'top 80%',
@@ -99,10 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             visionCards.forEach(card => card.dataset.animated = 'true');
                         }
                     },
-                    opacity: 0,
-                    y: 40,
+                    opacity: 1,
+                    y: 0,
                     stagger: 0.2,
-                    duration: 0.8
+                    duration: 0.8,
+                    ease: 'power2.out'
                 });
             }
         }
@@ -130,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
             } else {
-                gsap.from('.stat', {
+                gsap.to('.stat', {
                     scrollTrigger: {
                         trigger: '.about__stats',
                         start: 'top 85%',
@@ -139,8 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             statItems.forEach(stat => stat.dataset.animated = 'true');
                         }
                     },
-                    opacity: 0,
-                    scale: 0.6,
+                    opacity: 1,
+                    scale: 1,
                     stagger: 0.15,
                     duration: 0.6,
                     ease: 'back.out(1.7)'

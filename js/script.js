@@ -29,7 +29,12 @@ const lightRadio = document.querySelector('input[name="theme"][value="light"]');
 const darkRadio = document.querySelector('input[name="theme"][value="dark"]');
 
 if (themeToggle && lightRadio && darkRadio) {
-    themeToggle.addEventListener('click', (e) => {
+    const handleThemeToggle = (e) => {
+        // Prevent double-firing on touch devices
+        if (e.type === 'touchend') {
+            e.preventDefault();
+        }
+
         // Add jelly animation
         themeToggle.classList.remove('icon-jelly');
         // Force reflow
@@ -49,8 +54,13 @@ if (themeToggle && lightRadio && darkRadio) {
         overlay.style.backgroundColor = nextColor;
 
         // Set initial clip path at click position
-        const x = e.clientX;
-        const y = e.clientY;
+        // Handle both mouse/touch coordinates
+        const clientX = e.clientX || (e.changedTouches ? e.changedTouches[0].clientX : window.innerWidth / 2);
+        const clientY = e.clientY || (e.changedTouches ? e.changedTouches[0].clientY : window.innerHeight / 2);
+
+        const x = clientX;
+        const y = clientY;
+
         overlay.style.clipPath = `circle(0% at ${x}px ${y}px)`;
 
         document.body.appendChild(overlay);
@@ -85,7 +95,10 @@ if (themeToggle && lightRadio && darkRadio) {
             });
 
         }, 800);
-    });
+    };
+
+    themeToggle.addEventListener('click', handleThemeToggle);
+    themeToggle.addEventListener('touchend', handleThemeToggle);
 }
 
 // Navigation - scroll to sections on click

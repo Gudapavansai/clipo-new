@@ -20,33 +20,37 @@
     --font-heading: 'Qurova DEMO', sans-serif;
     --font-body: 'Qurova DEMO', sans-serif;
     --font-numbers: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Keep as Inter for numbers */
 }
 
-/* Inter font for: numbers, phone numbers, prices, form inputs */
+/* Inter font for: numbers, phone numbers, prices */
 .price,
 .price .currency,
 .stat__number,
-.feature-note,
-.glass-input,
-.number-text,
-a[href^="tel:"] {
-    font-family: var(--font-numbers);
+.number-text {
+    font-family: var(--font-numbers) !important;
 }
 
 input,
-textarea {
-    font-family: var(--font-numbers) !important;
+textarea,
+button,
+select {
+    font-family: var(--font-body) !important;
 }
 
 /* Remove number input spinners */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 
-input[type=number] {
+/* Ensure number inputs use Inter */
+input[type="number"] {
+    font-family: var(--font-numbers) !important;
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 /* Hide scrollbar but keep scroll functionality */
@@ -78,7 +82,7 @@ body {
     --saturation: 150%;
 
     font-size: 20px;
-    font-family: 'Qurova DEMO', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body);
     font-optical-sizing: auto;
     background-color: var(--c-bg);
     color: var(--c-content);
@@ -142,7 +146,7 @@ p,
 }
 
 .service-card p {
-    font-family: sans-serif;
+    font-family: var(--font-body);
 }
 
 /* Navbar with logo */
@@ -269,6 +273,8 @@ body:has(input[value="dim"]:checked) .navbar__logo--dark {
     position: relative;
     overflow: hidden;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .theme-toggle:hover {
@@ -419,10 +425,12 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 }
 
 /* Responsive Switcher: Show icons, hide text on small screens */
-@media (max-width: 600px) {
+/* Responsive Switcher: Show icons, hide text on small screens */
+@media (max-width: 1024px) {
     .switcher__text {
         display: block;
-        font-size: 18px;
+        font-size: 20px;
+        /* Increased mobile/tablet font size */
         font-weight: 500;
     }
 
@@ -431,7 +439,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     }
 
     .switcher {
-        height: 60px;
+        height: 60%;
         /* Larger for better touch targets */
     }
 
@@ -506,7 +514,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     display: block;
     width: var(--w);
     height: calc(100% - 8px);
-    border-radius: 99em;
+    border-radius: 100px;
     background-color: transparent;
     z-index: -1;
     backdrop-filter: blur(8px);
@@ -544,6 +552,8 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 .switcher__bubble:active {
     scale: 1.1;
     transition: scale 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 100px;
+    /* Ensure pill shape on active */
 }
 
 /* Initially position based on Checked state using CSS for load/fallback  */
@@ -904,7 +914,7 @@ img {
         left: 0;
         width: 100%;
 
-        padding: 16px 24px;
+        padding: 24px 24px;
         height: auto;
         /* ❌ remove fixed height */
 
@@ -937,28 +947,46 @@ img {
         right: 0;
         padding: 16px 24px;
         pointer-events: auto;
+        z-index: 1001;
     }
 
     .switcher {
-        /* Dynamic width for small screens to prevent overflow */
-        /* (100vw - 40px padding) / 5 items */
-        /* Wider switcher for mobile */
-        --w: calc((100vw - 24px) / 5);
-        /* Reduced margin deduction from 48px to 24px */
-        max-width: none;
-        /* Allow it to grow beyond 400px if needed, or set a larger cap */
+        /* Glass Tabbar Styling */
+        position: fixed;
+        left: 100%;
+        top: 90%;
+        transform: translateX(-50%);
+
         width: calc(100vw - 32px);
-        /* Explicit widely width */
-        /* Narrower items for mobile */
-        top: auto;
-        bottom: 20px;
-        /* Floating at bottom */
+        max-width: 520px;
+
         height: 64px;
         padding: 6px;
-        background-color: color-mix(in srgb, var(--c-glass) 60%, transparent);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        padding-bottom: calc(6px + env(safe-area-inset-bottom));
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        justify-content: space-evenly;
+
+        background: transparent;
+
+        backdrop-filter: blur(22px) saturate(180%);
+        -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        box-shadow:
+            0 20px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 1px rgba(255, 255, 255, 0.2);
+
+        box-sizing: border-box;
+        z-index: 1000;
     }
 }
+
 
 /* ==========================================
    General Section Styles
@@ -1082,7 +1110,7 @@ img {
     align-items: flex-start;
     padding: 32px;
     height: 100%;
-    min-height: 340px;
+    min-height: 280px;
     /* Minimum height for consistency */
     box-sizing: border-box;
 
@@ -1834,7 +1862,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     padding: 6px 12px;
     font-size: 1.4rem;
     letter-spacing: 1px;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-numbers);
 }
 
 .dw-win {
@@ -1843,7 +1871,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     padding: 6px 12px;
     font-size: 1.4rem;
     letter-spacing: 1px;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-numbers);
     display: flex;
     align-items: center;
 }
@@ -3117,4 +3145,24 @@ body:has(input[value="dim"]:checked) .service-card:hover,
 body:has(input[value="dim"]:checked) .pricing-card:hover {
     border-color: color-mix(in srgb, var(--c-light) 15%, transparent);
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+}
+
+/* Mobile & Tablet Navigation Layout */
+@media (max-width: 1024px) {
+    .switcher {
+        width: 92% !important;
+        max-width: 420px !important;
+        height: 70px !important;
+        left: 50% !important;
+        translate: -50% 0 !important;
+        transform: none !important;
+        bottom: 20px !important;
+        top: auto !important;
+        padding: 4px !important;
+        border-radius: 100px !important;
+        /* Ensure pill shape */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
 }
