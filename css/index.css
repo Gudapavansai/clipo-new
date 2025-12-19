@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); */
 @import url('background.css');
 /* @import url('footer.css'); */
 @import url('scroll.css');
@@ -29,7 +29,7 @@
     --font-numbers: "Quraova", ui-sans-serif, system-ui;
 }
 
-/* Inter font for: numbers, phone numbers, prices */
+/* Quraova font for: numbers, phone numbers, prices */
 .price,
 .price .currency,
 .stat__number,
@@ -52,7 +52,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-/* Ensure number inputs use Inter */
+/* Ensure number inputs use Quraova */
 input[type="number"] {
     font-family: var(--font-numbers) !important;
     -moz-appearance: textfield;
@@ -73,17 +73,18 @@ html::-webkit-scrollbar {
 }
 
 body {
+    /* DEFAULT DARK THEME from Reference */
     --c-glass: #bbbbbc;
     --c-light: #fff;
     --c-dark: #000;
 
-    --c-content: #000;
-    --c-action: #c850c0;
+    --c-content: #e1e1e1;
+    --c-action: #00e5ff;
 
-    --c-bg: #E8E8E9;
+    --c-bg: #1b1b1d;
 
-    --glass-reflex-dark: 1;
-    --glass-reflex-light: 1;
+    --glass-reflex-dark: 2;
+    --glass-reflex-light: 0.3;
 
     --saturation: 150%;
 
@@ -94,6 +95,31 @@ body {
     color: var(--c-content);
 
     transition: background 400ms cubic-bezier(1, 0.0, 0.4, 1), color 400ms cubic-bezier(1, 0.0, 0.4, 1);
+    /* Ensure body has a background to cover the fixed footer z-index -1 */
+    background-color: var(--c-bg);
+    position: relative;
+}
+
+/* Ensure footer is behind */
+body::after {
+    /* pseudo element for footer spacer if needed, but handled by JS margin-bottom */
+}
+
+body:has(input[value="light"]:checked) {
+    --c-glass: #bbbbbc;
+    --c-light: #fff;
+    --c-dark: #000;
+
+    --c-content: #000;
+    /* Black text for light mode */
+    --c-action: #c850c0;
+
+    --c-bg: #E8E8E9;
+
+    --glass-reflex-dark: 1;
+    --glass-reflex-light: 1;
+
+    --saturation: 150%;
 }
 
 body:has(input[value="dark"]:checked) {
@@ -184,23 +210,24 @@ p,
     line-height: 0;
 }
 
-/* Show black logo in light mode, white logo in dark mode */
+/* Show black logo in light mode, white logo in dark or dim mode */
 .navbar__logo--light {
-    display: block;
+    display: block !important;
 }
 
 .navbar__logo--dark {
-    display: none;
+    display: none !important;
 }
 
+/* Dark Theme Overrides */
 body:has(input[value="dark"]:checked) .navbar__logo--light,
 body:has(input[value="dim"]:checked) .navbar__logo--light {
-    display: none;
+    display: none !important;
 }
 
 body:has(input[value="dark"]:checked) .navbar__logo--dark,
 body:has(input[value="dim"]:checked) .navbar__logo--dark {
-    display: block;
+    display: block !important;
 }
 
 /* Right side actions */
@@ -383,6 +410,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     transition:
         background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
         box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
+    isolation: isolate;
 }
 
 .switcher__legend {
@@ -554,7 +582,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     width: var(--w);
     height: calc(100% - 8px);
     border-radius: 100px;
-    background-color: transparent;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     z-index: -1;
     backdrop-filter: blur(8px);
     box-shadow:
@@ -673,21 +701,31 @@ img {
 
 .hero {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    /* Center align everything */
     min-height: 100vh;
-    padding: 100px 60px;
+    padding: 120px 20px 40px;
+    /* Reduced side padding */
     box-sizing: border-box;
-    gap: 80px;
-    max-width: 1200px;
+    gap: 100px;
+    /* Large gap between text and image */
+    max-width: 1320px;
     margin: 0 auto;
     position: relative;
-    /* For scroll indicator */
+    overflow: hidden;
 }
 
 .hero__content {
-    flex: 1;
-    max-width: 500px;
+    flex: 0 1 auto;
+    /* Allow sizing based on content, but flexible */
+    width: auto;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 2;
 }
 
 .hero__badge {
@@ -740,7 +778,7 @@ img {
 }
 
 .hero__title-gradient {
-    background: linear-gradient(135deg, #ff6b9d, #c850c0, #7c3aed);
+    background: linear-gradient(90deg, #c850c0, #ffcc70);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -751,7 +789,7 @@ img {
 .hero__description {
     font-size: 16px;
     line-height: 1.7;
-    color: color-mix(in srgb, var(--c-content) 70%, transparent);
+    color: var(--c-content);
     margin: 0 0 32px;
     max-width: 450px;
     /* animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s backwards; */
@@ -761,6 +799,7 @@ img {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    justify-content: flex-start;
     /* animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s backwards; */
 }
 
@@ -806,34 +845,34 @@ img {
 
 /* Hero Visual / Device */
 .hero__visual {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     display: flex;
     justify-content: center;
+    /* Center the device in its block */
     align-items: center;
     perspective: 1000px;
-    /* animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s backwards; */
+    width: auto;
 }
 
 .hero__device {
     position: relative;
-    width: 320px;
-    height: 420px;
-    padding: 12px;
-    background-color: color-mix(in srgb, var(--c-light) 70%, transparent);
-    border-radius: 32px;
+    width: 100%;
+    max-width: 400px;
+    /* Reduced Size */
+    aspect-ratio: 1 / 1;
+    /* Equal Height and Width */
+    height: auto;
+    padding: 10px;
+    /* Thinner padding */
+    /* Thick Glass Border Effect */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    border-radius: 40px;
     backdrop-filter: blur(20px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
     box-shadow:
-        inset 0 0 0 1.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
-        inset 2px 4px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
-        inset -2px -2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-        0px 8px 32px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-        0px 20px 60px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    transition:
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-style: preserve-3d;
+        0 20px 60px -10px color-mix(in srgb, var(--c-dark) 40%, transparent),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    transition: transform 0.4s ease;
 }
 
 .hero__device:hover {
@@ -842,26 +881,23 @@ img {
         inset 0 0 0 1.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
         inset 2px 4px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
         inset -2px -2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-        0px 20px 40px -10px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent),
-        0px 40px 80px -10px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
+        0px 30px 80px -20px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 25%), transparent);
 }
 
 .hero__device-screen {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 16px;
+    border-radius: 32px;
     overflow: hidden;
-    background-color: #000;
+    background-color: var(--c-bg);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-dark) 5%, transparent);
 }
 
 .hero__device-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 0;
-    max-width: none;
-    aspect-ratio: unset;
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -869,49 +905,74 @@ img {
     transform: scale(1.05);
 }
 
-.hero__device-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0;
-    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.hero__device:hover .hero__device-video {
-    transform: scale(1.05);
-}
-
+/* Play Button - Bottom Left Corner */
 .hero__play-btn {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 24px;
+    left: 24px;
+    /* Bottom Left */
+    transform: none;
+    /* Remove center transform */
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    background-color: color-mix(in srgb, var(--c-light) 70%, transparent);
-    color: var(--c-content);
-    border: none;
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 50%;
     cursor: pointer;
-    backdrop-filter: blur(12px) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(12px) saturate(var(--saturation));
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 40%), transparent),
-        inset 2px 3px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
-        inset -2px -2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-        0px 4px 12px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
-    transition: transform 200ms, background-color 200ms, box-shadow 200ms;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 200ms, background-color 200ms;
     z-index: 10;
 }
 
 .hero__play-btn:hover {
-    transform: scale(1.08);
-    background-color: color-mix(in srgb, var(--c-light) 85%, transparent);
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
+.hero__play-btn svg {
+    margin-left: 2px;
+    /* Visual center */
+}
+
+
+
 /* Responsive */
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        padding-top: 120px;
+        text-align: center;
+    }
+
+    .hero__content {
+        width: 100%;
+        align-items: center;
+    }
+
+    .hero__buttons {
+        justify-content: center;
+    }
+
+    .hero__visual {
+        width: 100%;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .hero__gallery {
+        transform: rotate(-3deg);
+    }
+
+    .hero__gallery-card {
+        width: 160px;
+    }
+}
+
 @media (max-width: 900px) {
     body {
         font-size: 16px;
@@ -961,6 +1022,32 @@ img {
         position: fixed;
         /* REQUIRED for top positioning */
         top: 0;
+        left: 0;
+        width: 100%;
+
+        padding: 24px 24px;
+        height: auto;
+        /* ❌ remove fixed height */
+
+        display: flex;
+        /* REQUIRED for justify-content */
+        align-items: center;
+        justify-content: space-between;
+
+        pointer-events: auto;
+        /* ❌ don't block clicks */
+        z-index: 1000;
+    }
+
+    .navbar__logo {
+        height: 40px;
+        /* Match theme button size */
+        width: auto;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: transparent;
+        backdrop-filter: none;
+        border-radius: 0;
         left: 0;
         width: 100%;
 
@@ -1781,21 +1868,21 @@ textarea.glass-input {
 }
 
 .footer__logo--light {
-    display: block;
+    display: block !important;
 }
 
 .footer__logo--dark {
-    display: none;
+    display: none !important;
 }
 
 body:has(input[value="dark"]:checked) .footer__logo--light,
 body:has(input[value="dim"]:checked) .footer__logo--light {
-    display: none;
+    display: none !important;
 }
 
 body:has(input[value="dark"]:checked) .footer__logo--dark,
 body:has(input[value="dim"]:checked) .footer__logo--dark {
-    display: block;
+    display: block !important;
 }
 
 .footer__tagline {
@@ -2736,7 +2823,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     }
 
     .switcher__text {
-        font-size: 15px;
+        font-size: 20px;
     }
 
     /* Scroll Indicator */
@@ -2783,7 +2870,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     }
 
     .switcher__text {
-        font-size: 9px;
+        font-size: 13px;
     }
 }
 
