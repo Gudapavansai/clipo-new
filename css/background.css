@@ -18,7 +18,7 @@ body::before {
     width: 100vw;
     height: 100vh;
     z-index: -10;
-    background-image: url('../images/CLipo Bg  White.png');
+    background-image: url('../images/glass.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -34,6 +34,11 @@ body {
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
+}
+
+/* Light mode background - Explicit */
+body:has(input[value="light"]:checked)::before {
+    background-image: url('../images/glass.png');
 }
 
 /* Dark mode background */
