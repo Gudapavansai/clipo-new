@@ -11,8 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Qurova - Modern Elegant Logo Font -->
-    <link href="https://db.onlinewebfonts.com/c/2cf31cbaf98b296b692adb4ed0483799?family=Qurova+DEMO" rel="stylesheet">
+    <!-- Qurova Font -->
+    <!-- Qurova Font -->
+    <link rel="preload" href="/assets/fonts/Quraova.woff2" as="font" type="font/woff2" crossorigin>
     
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/footer.css">
@@ -96,8 +97,10 @@
     </div>
     
     <nav class="navbar">
-        <img class="navbar__logo navbar__logo--light" src="./images/Clipo Logo_Black.png" alt="Clipo Logo">
-        <img class="navbar__logo navbar__logo--dark" src="./images/Clipo Logo_White (1).png" alt="Clipo Logo">
+        <a href="index.html" class="navbar__logo-link">
+            <img class="navbar__logo navbar__logo--light" src="./images/Clipo Logo_Black.png" alt="Clipo Logo">
+            <img class="navbar__logo navbar__logo--dark" src="./images/Clipo Logo_White (1).png" alt="Clipo Logo">
+        </a>
     </nav>
     <div class="navbar__actions">
 
@@ -272,7 +275,7 @@
                 </div>
                 <div class="pricing-divider"></div>
                 <ul class="features">
-                    <li>Shot On IPhone</li>
+                    <li>Shot On iPhone</li>
                     <li><span class="number-text">6</span> Reels <span class="feature-note">(up to <span class="number-text">60</span> secs each)</span></li>
                     <li>Same Day Delivery</li>
                     <li>Single Person Shoot</li>
@@ -382,5 +385,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/script-animations.js"></script>
+    <svg class="sr-only" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur
+            id="SvgjsFeGaussianBlur1000"
+            result="SvgjsFeGaussianBlur1000"
+            in="SourceGraphic"
+            stdDeviation="13"
+          ></feGaussianBlur>
+          <feColorMatrix
+            id="SvgjsFeColorMatrix1001"
+            result="SvgjsFeColorMatrix1001"
+            in="SvgjsFeGaussianBlur1000"
+            values="
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 13 -10
+            "
+            type="matrix"
+          ></feColorMatrix>
+          <feComposite
+            id="SvgjsFeComposite1002"
+            result="SvgjsFeComposite1002"
+            in="SvgjsFeColorMatrix1001"
+            operator="atop"
+          ></feComposite>
+        </filter>
+        <filter id="knockout" colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            result="knocked"
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    -1 -1 -1 1 0"
+          />
+          <feComponentTransfer>
+            <feFuncR type="linear" slope="3" intercept="-1" />
+            <feFuncG type="linear" slope="3" intercept="-1" />
+            <feFuncB type="linear" slope="3" intercept="-1" />
+          </feComponentTransfer>
+          <feComponentTransfer>
+            <feFuncR type="table" tableValues="0 0 0 0 0 1 1 1 1 1" />
+            <feFuncG type="table" tableValues="0 0 0 0 0 1 1 1 1 1" />
+            <feFuncB type="table" tableValues="0 0 0 0 0 1 1 1 1 1" />
+          </feComponentTransfer>
+        </filter>
+      </defs>
+    </svg>
 </body>
 </html>

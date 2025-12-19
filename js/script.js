@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const availableWidth = switcher.offsetWidth - switcherPadding;
                 const optWidth = availableWidth / options.length;
                 bubble.style.width = `${optWidth}px`;
+                bubble.style.width = `${optWidth}px`;
                 bubble.style.transform = `translateX(${data.index * optWidth}px)`;
             }
         }
@@ -261,6 +262,9 @@ function updateLayout() {
     const optWidth = switcher.offsetWidth / options.length;
     maxTranslate = switcher.offsetWidth - optWidth;
 
+    // Update bubble width
+    bubble.style.width = `${optWidth}px`;
+
     // Snap bubble to current selection on resize
     const checkedIndex = getCheckedIndex();
     if (checkedIndex !== -1 && !isDragging) {
@@ -271,7 +275,16 @@ function updateLayout() {
     return optWidth;
 }
 
-// Handle resize to keep bubble aligned
+// Handle resize to keep bubble aligned (using ResizeObserver for element changes)
+const resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(updateLayout);
+});
+
+if (switcher) {
+    resizeObserver.observe(switcher);
+}
+
+// Fallback for window resize
 window.addEventListener('resize', () => {
     requestAnimationFrame(updateLayout);
 });
@@ -308,6 +321,9 @@ function startDrag(e) {
     // Prevent default to stop text selection/native dragging
     if (e.cancelable) e.preventDefault();
 
+    // Clear any previous highlights
+    options.forEach(opt => opt.classList.remove('switcher__option--highlight'));
+
     updateLayout();
     initialTranslate = currentIndex * optWidth;
     currentTranslate = initialTranslate;
@@ -342,6 +358,20 @@ function moveDrag(e) {
     newPos = Math.max(0, Math.min(newPos, maxTranslate));
 
     currentTranslate = newPos;
+
+    // Calculate nearest index for highlighting
+    const optWidth = switcher.offsetWidth / options.length;
+    const nearestIndex = Math.round(newPos / optWidth);
+    const clampedIndex = Math.max(0, Math.min(nearestIndex, options.length - 1));
+
+    // Update highlight classes
+    options.forEach((opt, idx) => {
+        if (idx === clampedIndex) {
+            opt.classList.add('switcher__option--highlight');
+        } else {
+            opt.classList.remove('switcher__option--highlight');
+        }
+    });
 }
 
 function endDrag() {
@@ -358,6 +388,9 @@ function endDrag() {
     const nearestIndex = Math.round(currentTranslate / optWidth);
     const clampedIndex = Math.max(0, Math.min(nearestIndex, options.length - 1));
     const finalTranslate = clampedIndex * optWidth;
+
+    // Remove highlight class (checked state will take over)
+    options.forEach(opt => opt.classList.remove('switcher__option--highlight'));
 
     // Snap animation
     bubble.style.transform = `translateX(${finalTranslate}px)`;

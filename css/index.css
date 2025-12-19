@@ -13,14 +13,20 @@
     box-sizing: border-box;
 }
 
-/* Qurova font is loaded via link tag in HTML */
+/* Qurova font definition */
+@font-face {
+    font-family: 'Quraova';
+    src: url('/assets/fonts/Quraova.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* Qurova font variable for easy use */
 :root {
-    --font-heading: 'Qurova DEMO', sans-serif;
-    --font-body: 'Qurova DEMO', sans-serif;
-    --font-numbers: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    /* Keep as Inter for numbers */
+    --font-heading: "Quraova", ui-sans-serif, system-ui;
+    --font-body: "Quraova", ui-sans-serif, system-ui;
+    --font-numbers: "Quraova", ui-sans-serif, system-ui;
 }
 
 /* Inter font for: numbers, phone numbers, prices */
@@ -170,6 +176,12 @@ p,
     width: auto;
     object-fit: contain;
     transition: opacity 400ms cubic-bezier(1, 0.0, 0.4, 1);
+}
+
+.navbar__logo-link {
+    display: block;
+    text-decoration: none;
+    line-height: 0;
 }
 
 /* Show black logo in light mode, white logo in dark mode */
@@ -429,10 +441,9 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 @media (max-width: 1024px) {
     .switcher__text {
         display: block;
-        font-size: 20px;
-        /* Increased mobile/tablet font size */
-        font-weight: 400;
-        /* Regular weight like image */
+        font-size: 16px;
+        /* Optimized for 5 items fitting in width */
+        font-weight: 500;
         line-height: 1;
         white-space: nowrap !important;
     }
@@ -442,12 +453,22 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     }
 
     .switcher {
-        height: 60%;
-        /* Larger for better touch targets */
+        height: 64px;
+        /* Original size */
+        width: 90vw;
+        max-width: 500px;
+        transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .switcher:active,
+    .switcher:focus-within,
+    .switcher--dragging {
+        height: 72px;
+        width: 95vw;
     }
 
     .switcher__option {
-        padding: 0 8px;
+        padding: 0 4px;
         flex: 1;
         min-width: 0;
         max-width: none;
@@ -508,6 +529,21 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     font-weight: 600;
 }
 
+/* Highlight state for dragging */
+.switcher__option--highlight {
+    --c: var(--c-content);
+    cursor: auto;
+    opacity: 1;
+}
+
+.switcher__option--highlight .switcher__icon {
+    scale: 1;
+}
+
+.switcher__option--highlight .switcher__text {
+    font-weight: 600;
+}
+
 /* Glass slider indicator */
 /* Glass slider indicator */
 .switcher__bubble {
@@ -529,15 +565,32 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
         inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
         inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
         0px 3px 8px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent);
-    transition:
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
     /* Springy bounce - refined to be tighter/more Apple-like */
     transition:
         background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
         box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 600ms linear(0 0%,
+            0.6091 3.69%,
+            1.0259 7.24%,
+            1.1733 9.05%,
+            1.283 10.92%,
+            1.3562 12.87%,
+            1.3948 14.95%,
+            1.4014 16.03%,
+            1.3999 17.16%,
+            1.3731 19.64%,
+            1.3202 22.27%,
+            1.1394 29.39%,
+            1.0582 33.17%,
+            0.9943 37.45%,
+            0.9734 39.64%,
+            0.9593 41.92%,
+            0.9505 45.08%,
+            0.9517 48.7%,
+            0.9924 63.02%,
+            1.0046 71.2%,
+            1.0061 78.24%,
+            1 100%),
         scale 200ms ease;
     /* Add separate transition for scale */
     pointer-events: none;
@@ -554,6 +607,7 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
 .switcher:active .switcher__bubble,
 .switcher__bubble:active {
     scale: 1.1;
+    /* Expand on press */
     transition: scale 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
     border-radius: 100px;
     /* Ensure pill shape on active */
@@ -949,16 +1003,19 @@ img {
     .switcher {
         /* Glass Tabbar Styling */
         position: fixed;
-        left: 100%;
+        left: 50%;
+        /* Correct centering */
         top: 90%;
         transform: translateX(-50%);
 
-        width: calc(100vw - 32px);
-        max-width: 520px;
+        width: calc(100vw - 40px);
+        max-width: 500px;
 
         height: 64px;
+        /* Original Size */
         padding: 6px;
         padding-bottom: calc(6px + env(safe-area-inset-bottom));
+        translate: 0;
 
         display: flex;
         flex-wrap: wrap;
@@ -980,6 +1037,18 @@ img {
 
         box-sizing: border-box;
         z-index: 1000;
+
+        transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Expand on Touch/Drag */
+    .switcher:active,
+    .switcher:focus-within,
+    .switcher--dragging {
+        height: 72px;
+        /* Expanded Height */
+        width: calc(100vw - 24px);
+        /* Expanded Width */
     }
 }
 
