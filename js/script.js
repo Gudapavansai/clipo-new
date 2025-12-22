@@ -492,6 +492,74 @@ function showGlassyAlert(message) {
     });
 }
 
+// Success Notification with checkmark icon
+function showSuccessNotification(userName) {
+    // Remove existing overlay if any
+    const existing = document.querySelector('.custom-modal-overlay');
+    if (existing) {
+        existing.remove();
+    }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'custom-modal-overlay';
+
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal success-modal';
+
+    // Checkmark icon
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'success-icon';
+    iconDiv.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+    `;
+
+    // Title
+    const title = document.createElement('h3');
+    title.className = 'success-title';
+    title.textContent = 'Request Received!';
+
+    // Message
+    const message = document.createElement('p');
+    message.className = 'success-message';
+    message.innerHTML = `Thanks <span class="highlight">${userName}</span>! We'll call you within 24 hours.`;
+
+    // Button
+    const btn = document.createElement('button');
+    btn.className = 'success-btn';
+    btn.textContent = 'Got It';
+
+    // Close event
+    const closeModal = () => {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            overlay.remove();
+        }, 300);
+    };
+
+    btn.onclick = closeModal;
+
+    // Close on clicking outside
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            closeModal();
+        }
+    };
+
+    modal.appendChild(iconDiv);
+    modal.appendChild(title);
+    modal.appendChild(message);
+    modal.appendChild(btn);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+        overlay.classList.add('active');
+    });
+}
+
 const scriptURL = 'https://script.google.com/macros/s/AKfycbw31N52W_a9osfowfMOjgEsiJpGwHvBjQuAX4FSfmpptrD-aHXImaBbjI50RB2VAr44ew/exec';
 
 const form = document.getElementById('contactForm');
@@ -545,7 +613,8 @@ if (form) {
                 if (!response.ok) {
                     throw new Error(`Server returned ${response.status} ${response.statusText}`);
                 }
-                showGlassyAlert("Thank you! Your message has been sent successfully.");
+                // Show success notification with user's name
+                showSuccessNotification(nameVal);
                 form.reset();
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
