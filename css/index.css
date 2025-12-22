@@ -469,12 +469,18 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     transition: color 200ms, font-weight 200ms, opacity 200ms;
 }
 
+/* Bold text when bubble is over it */
+.switcher__option.active .switcher__text,
+.switcher__option:has(input:checked) .switcher__text {
+    font-weight: 700;
+}
+
 /* Responsive Switcher: Show icons, hide text on small screens */
 /* Responsive Switcher: Show icons, hide text on small screens */
 @media (max-width: 1024px) {
     .switcher__text {
         display: block;
-        font-size: 16px;
+        font-size: 14px;
         /* Optimized for 5 items fitting in width */
         font-weight: 500;
         line-height: 1;
@@ -486,25 +492,31 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     }
 
     .switcher {
-        height: 64px;
+        height: 56px;
         /* Original size */
-        width: 90vw;
-        max-width: 500px;
+        width: 92vw;
+        max-width: 480px;
         transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        justify-content: space-evenly;
+        /* Equal spacing */
     }
 
     .switcher:active,
     .switcher:focus-within,
     .switcher--dragging {
-        height: 72px;
+        height: 60px;
         width: 95vw;
     }
 
     .switcher__option {
-        padding: 0 4px;
-        flex: 1;
+        padding: 0;
+        flex: 1 1 0;
+        /* Equal width for all options */
         min-width: 0;
         max-width: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -646,24 +658,31 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     /* Ensure pill shape on active */
 }
 
-/* Mobile-only: Bubble stays within navbar but expands slightly when touched */
+/* Mobile-only: Bubble fits within navbar, expands on touch */
 @media (max-width: 1024px) {
     .switcher {
         overflow: hidden;
-        /* Keep bubble inside navbar */
+        /* Keep bubble inside navbar boundaries */
+        position: fixed;
+        bottom: 20px;
+        z-index: 100;
     }
 
     .switcher:active .switcher__bubble,
     .switcher--dragging .switcher__bubble {
-        scale: 1.08;
-        /* Subtle expansion on touch */
-        transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 150ms ease;
+        scale: 1.15;
+        /* Expand on touch (contained within navbar) */
+        box-shadow:
+            inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 30%), transparent),
+            0px 4px 16px 0px color-mix(in srgb, var(--c-dark) 15%, transparent);
+        transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     /* Smooth bubble transition */
     .switcher__bubble {
         transition:
-            transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+            scale 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 }
 

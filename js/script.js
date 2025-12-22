@@ -113,19 +113,8 @@ navInputs.forEach((input, index) => {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Move bubble to clicked item
-        const bubble = document.querySelector('.switcher__bubble');
-        if (bubble && switcher) {
-            const optWidth = switcher.offsetWidth / navOptions.length;
-            const targetTranslate = index * optWidth;
-
-            bubble.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            bubble.style.transform = `translateX(${targetTranslate}px)`;
-
-            setTimeout(() => {
-                bubble.style.transition = '';
-            }, 500);
-        }
+        // Move bubble to clicked item using the precise positioning function
+        moveBubbleToIndex(index);
     });
 });
 
@@ -150,22 +139,27 @@ function moveBubbleToIndex(index) {
     // Clamp index to valid range (0 to options.length - 1)
     const clampedIndex = Math.max(0, Math.min(index, options.length - 1));
 
-    // Calculate the width based on actual switcher width minus padding
-    const switcherPadding = 8; // 4px on each side
-    const availableWidth = switcher.offsetWidth - switcherPadding;
-    const optWidth = availableWidth / options.length;
-    const targetTranslate = clampedIndex * optWidth;
+    // Get the target option element for precise positioning
+    const targetOption = options[clampedIndex];
+    if (!targetOption) return;
 
-    // Ensure we don't exceed the maximum position
-    const maxTranslate = (options.length - 1) * optWidth;
-    const finalTranslate = Math.min(targetTranslate, maxTranslate);
+    // Remove active class from all options and add to current
+    options.forEach(opt => opt.classList.remove('active'));
+    targetOption.classList.add('active');
+
+    // Calculate position based on option's actual position
+    const switcherRect = switcher.getBoundingClientRect();
+    const optionRect = targetOption.getBoundingClientRect();
+
+    // Calculate the translate value relative to the switcher
+    const targetTranslate = optionRect.left - switcherRect.left;
 
     // Update bubble width to match option width
-    bubble.style.width = `${optWidth}px`;
+    bubble.style.width = `${optionRect.width}px`;
 
     // Apply smooth transition
     bubble.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease';
-    bubble.style.transform = `translateX(${finalTranslate}px)`;
+    bubble.style.transform = `translateX(${targetTranslate}px)`;
 
     // Clean up transition after animation
     setTimeout(() => {
@@ -183,12 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const bubble = document.querySelector('.switcher__bubble');
             const options = document.querySelectorAll('.switcher__option');
             if (bubble && options.length > 0 && switcher) {
-                const switcherPadding = 8; // 4px on each side
-                const availableWidth = switcher.offsetWidth - switcherPadding;
-                const optWidth = availableWidth / options.length;
-                bubble.style.width = `${optWidth}px`;
-                bubble.style.width = `${optWidth}px`;
-                bubble.style.transform = `translateX(${data.index * optWidth}px)`;
+                const targetOption = options[data.index];
+                if (targetOption) {
+                    // Set initial active class
+                    options.forEach(opt => opt.classList.remove('active'));
+                    targetOption.classList.add('active');
+
+                    const switcherRect = switcher.getBoundingClientRect();
+                    const optionRect = targetOption.getBoundingClientRect();
+                    bubble.style.width = `${optionRect.width}px`;
+                    bubble.style.transform = `translateX(${optionRect.left - switcherRect.left}px)`;
+                }
             }
         }
     }
@@ -359,16 +358,24 @@ function moveDrag(e) {
 
     currentTranslate = newPos;
 
-    // Calculate nearest index for highlighting
+    // Calculate which options the bubble is touching/overlapping
     const optWidth = switcher.offsetWidth / options.length;
-    const nearestIndex = Math.round(newPos / optWidth);
-    const clampedIndex = Math.max(0, Math.min(nearestIndex, options.length - 1));
+    const bubbleLeft = newPos;
+    const bubbleRight = newPos + optWidth;
 
-    // Update highlight classes
+    // Update active classes for all options that bubble touches
     options.forEach((opt, idx) => {
-        if (idx === clampedIndex) {
+        const optLeft = idx * optWidth;
+        const optRight = (idx + 1) * optWidth;
+
+        // Check if bubble overlaps with this option
+        const isOverlapping = bubbleLeft < optRight && bubbleRight > optLeft;
+
+        if (isOverlapping) {
+            opt.classList.add('active');
             opt.classList.add('switcher__option--highlight');
         } else {
+            opt.classList.remove('active');
             opt.classList.remove('switcher__option--highlight');
         }
     });
@@ -389,8 +396,15 @@ function endDrag() {
     const clampedIndex = Math.max(0, Math.min(nearestIndex, options.length - 1));
     const finalTranslate = clampedIndex * optWidth;
 
-    // Remove highlight class (checked state will take over)
-    options.forEach(opt => opt.classList.remove('switcher__option--highlight'));
+    // Remove highlight and active classes, then set active on final selection
+    options.forEach((opt, idx) => {
+        opt.classList.remove('switcher__option--highlight');
+        if (idx === clampedIndex) {
+            opt.classList.add('active');
+        } else {
+            opt.classList.remove('active');
+        }
+    });
 
     // Snap animation
     bubble.style.transform = `translateX(${finalTranslate}px)`;
