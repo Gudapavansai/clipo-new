@@ -87,18 +87,33 @@
 }
 
 /* Handle Theme Modes for Logo */
-.footer-logo-light {
-    display: none;
-}
-
-.footer-logo-dark {
+.footer__logo--light {
     display: block;
 }
 
-/* In this specific dark footer design, we might always want the white logo? 
-   The user said "according to page", but a dark footer usually needs a light logo. 
-   I will enforce the white logo for visibility since the background is dark glass. */
-/* REMOVED FILTER TO ALLOW BLACK LOGO IN LIGHT MODE */
+.footer__logo--dark {
+    display: none;
+}
+
+/* Dark/Dim Theme Overrides */
+body:has(input[value="dark"]:checked) .footer__logo--light,
+body:has(input[value="dim"]:checked) .footer__logo--light {
+    display: none !important;
+}
+
+body:has(input[value="dark"]:checked) .footer__logo--dark,
+body:has(input[value="dim"]:checked) .footer__logo--dark {
+    display: block !important;
+}
+
+/* Explicit Light Theme Overrides */
+body:has(input[value="light"]:checked) .footer__logo--light {
+    display: block !important;
+}
+
+body:has(input[value="light"]:checked) .footer__logo--dark {
+    display: none !important;
+}
 
 /* Social Icons */
 .social-icons {

@@ -212,14 +212,14 @@ p,
 
 /* Show black logo in light mode, white logo in dark or dim mode */
 .navbar__logo--light {
-    display: block !important;
+    display: block;
 }
 
 .navbar__logo--dark {
-    display: none !important;
+    display: none;
 }
 
-/* Dark Theme Overrides */
+/* Dark/Dim Theme Overrides */
 body:has(input[value="dark"]:checked) .navbar__logo--light,
 body:has(input[value="dim"]:checked) .navbar__logo--light {
     display: none !important;
@@ -228,6 +228,15 @@ body:has(input[value="dim"]:checked) .navbar__logo--light {
 body:has(input[value="dark"]:checked) .navbar__logo--dark,
 body:has(input[value="dim"]:checked) .navbar__logo--dark {
     display: block !important;
+}
+
+/* Explicit Light Theme Overrides */
+body:has(input[value="light"]:checked) .navbar__logo--light {
+    display: block !important;
+}
+
+body:has(input[value="light"]:checked) .navbar__logo--dark {
+    display: none !important;
 }
 
 /* Right side actions */
@@ -2823,7 +2832,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     }
 
     .switcher__text {
-        font-size: 20px;
+        font-size: 17px;
     }
 
     /* Scroll Indicator */
@@ -2870,7 +2879,7 @@ body:has(input[value="dim"]:checked) .footer__logo--dark {
     }
 
     .switcher__text {
-        font-size: 13px;
+        font-size: 10px;
     }
 }
 
