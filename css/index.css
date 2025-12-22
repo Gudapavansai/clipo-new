@@ -646,30 +646,24 @@ body:has(input[value="dim"]:checked) .theme-toggle .icon-moon {
     /* Ensure pill shape on active */
 }
 
-/* Mobile-only: Bubble expands outside when touched */
+/* Mobile-only: Bubble stays within navbar but expands slightly when touched */
 @media (max-width: 1024px) {
     .switcher {
-        overflow: visible;
-        /* Allow bubble to overflow */
+        overflow: hidden;
+        /* Keep bubble inside navbar */
     }
 
     .switcher:active .switcher__bubble,
     .switcher--dragging .switcher__bubble {
-        scale: 1.25;
-        /* Larger expansion on mobile */
-        transform-origin: center center;
-        box-shadow:
-            inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 20%), transparent),
-            inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
-            0px 8px 24px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent);
-        transition: scale 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms ease;
+        scale: 1.08;
+        /* Subtle expansion on touch */
+        transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 150ms ease;
     }
 
-    /* Reset after touch ends */
+    /* Smooth bubble transition */
     .switcher__bubble {
         transition:
-            transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
-            scale 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 }
 

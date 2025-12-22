@@ -202,17 +202,19 @@
     }
 
     .hero__buttons {
-        flex-direction: column;
+        flex-direction: row;
         gap: 12px;
-        width: 100%;
+        width: auto;
+        justify-content: center;
     }
 
     .hero__btn {
-        width: 100%;
-        padding: 14px 24px;
-        font-size: 14px;
+        width: auto;
+        padding: 12px 20px;
+        font-size: 13px;
         text-align: center;
         box-sizing: border-box;
+        white-space: nowrap;
     }
 
     .hero__device {
@@ -352,7 +354,12 @@
     }
 
     .contact__content .section__title {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+
+    .contact__content .section__desc {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 
     .contact__form {
@@ -360,14 +367,19 @@
     }
 
     .glass-input {
-        padding: 14px 18px;
-        font-size: 0.95rem;
+        padding: 16px 18px;
+        font-size: 16px;
         width: 100%;
         box-sizing: border-box;
     }
 
+    .glass-input::placeholder {
+        font-size: 15px;
+    }
+
     textarea.glass-input {
         min-height: 100px;
+        font-size: 16px;
     }
 
     /* Footer */
@@ -481,17 +493,19 @@
     }
 
     .hero__buttons {
-        flex-direction: column;
-        gap: 12px;
-        width: 100%;
+        flex-direction: row;
+        gap: 10px;
+        width: auto;
+        justify-content: center;
     }
 
     .hero__btn {
-        width: 100%;
-        padding: 14px 20px;
-        font-size: 14px;
+        width: auto;
+        padding: 10px 16px;
+        font-size: 12px;
         text-align: center;
         box-sizing: border-box;
+        white-space: nowrap;
     }
 
     .hero__device {
@@ -591,11 +605,12 @@
     }
 
     .contact__content .section__title {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
     }
 
     .contact__content .section__desc {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
     }
 
     .contact__form {
@@ -603,16 +618,21 @@
     }
 
     .glass-input {
-        padding: 12px 16px;
-        font-size: 0.9rem;
+        padding: 14px 16px;
+        font-size: 16px;
         border-radius: 12px;
         width: 100%;
         box-sizing: border-box;
     }
 
+    .glass-input::placeholder {
+        font-size: 14px;
+    }
+
     textarea.glass-input {
         min-height: 80px;
         border-radius: 12px;
+        font-size: 16px;
     }
 
     .navbar__btn.full-width {
