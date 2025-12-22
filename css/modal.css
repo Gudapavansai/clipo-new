@@ -85,3 +85,31 @@
 }
 
 /* Dark mode adjustments if needed are handled by CSS variables */
+
+.custom-modal.video-modal {
+    width: 90%;
+    max-width: 900px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.custom-modal.video-modal iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    display: block;
+}
+
+.video-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+    line-height: 1;
+}

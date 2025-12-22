@@ -38,7 +38,7 @@ body {
 
 /* Light mode background - Explicit */
 body:has(input[value="light"]:checked)::before {
-    background-image: url('../images/glass.png');
+    background-image: url('../images/CLipo Bg  White.png');
 }
 
 /* Dark mode background */

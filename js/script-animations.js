@@ -312,15 +312,23 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.position = 'relative';
         card.style.overflow = 'hidden';
 
+        // Throttle mousemove for better performance
+        let ticking = false;
         card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
 
-            glow.style.background =
-                `radial-gradient(circle at ${x}px ${y}px, rgba(200,80,192,0.45), transparent 70%)`;
+                    glow.style.background =
+                        `radial-gradient(circle at ${x}px ${y}px, rgba(200,80,192,0.45), transparent 70%)`;
 
-            glow.style.opacity = 1;
+                    glow.style.opacity = 1;
+                    ticking = false;
+                });
+            }
         });
 
         card.addEventListener('mouseleave', () => {

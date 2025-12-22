@@ -569,3 +569,66 @@ if (form) {
     });
 }
 
+// ==========================================
+// Hero Video Modal Playback
+// ==========================================
+
+function openVideoModal(videoUrl) {
+    // Remove existing overlay if any
+    const existing = document.querySelector('.custom-modal-overlay');
+    if (existing) {
+        existing.remove();
+    }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'custom-modal-overlay';
+
+    // Create close button outside modal for better UX on mobile or top right
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'video-modal-close';
+    closeBtn.innerHTML = '&times;';
+    closeBtn.onclick = closeModal;
+
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal video-modal';
+
+    // Create iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = videoUrl;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+
+    modal.appendChild(iframe);
+    modal.appendChild(closeBtn); // Append close button to modal relative handling
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    function closeModal() {
+        overlay.classList.remove('active');
+        // Stop video by removing iframe
+        setTimeout(() => {
+            overlay.remove();
+        }, 300);
+    }
+
+    // Close on clicking outside
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            closeModal();
+        }
+    };
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+        overlay.classList.add('active');
+    });
+}
+
+const heroPlayBtn = document.querySelector('.hero__play-btn');
+if (heroPlayBtn) {
+    heroPlayBtn.addEventListener('click', () => {
+        // Play local video in modal
+        openVideoModal('./images/clipo-pomo.mp4', true);
+    });
+}
+
